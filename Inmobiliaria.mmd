@@ -1,0 +1,49 @@
+erDiagram
+
+Propietario{
+int(11) IdPropietario PK
+varchar(50) Nombre
+varchar(50) Apellido
+varchar(50) DNI
+varchar(50) Telefono
+varchar(50) Email
+}
+
+Inquilino{
+int(11) IdInquilino PK
+varchar(50) Nombre
+varchar(50) Apellido
+varchar(50) DNI
+varchar(50) Telefono
+varchar(50) Email
+}
+
+Inmueble{
+int(11) IdInmueble PK
+varchar(50) Direccion
+varchar(50) Uso
+varchar(50) Tipo
+int(11) CantAmbientes
+varchar(50) Coordenadas
+int(11) IdPropietario FK
+}
+
+Contrato{
+int(11) IdContrato PK
+int(11) IdInquilino FK
+int(11) IdInmueble FK
+datetime FechaInicio
+datetime FechaFin
+}
+
+Pago{
+int(11) NroPago PK
+datetime FechaPago
+int(11) Importe
+int(11) IdContrato FK
+}
+
+Propietario ||--o{ Inmueble : PropietarioId
+Contrato }o--|| Inquilino : InquilinoId
+Contrato ||--|| Inmueble : InmuebleId
+Contrato ||--o{ Pago : ContratoId
