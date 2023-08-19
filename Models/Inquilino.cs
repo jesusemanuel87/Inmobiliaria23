@@ -18,7 +18,13 @@ namespace Inmobiliaria23.Models;
             public string Apellido { get; set; }
             [Required]
             public string DNI { get; set; }
-            public string Telefono { get; set; }
+
+            [Display(Name ="Teléfono")]
+            public string? Telefono { get; set; }
             [Required, EmailAddress]
-            public string Email { get; set; }
-        }
+            public string? Email { get; set; }
+         public override string ToString()
+    {     
+        return $"{Nombre} {Apellido}";
+    }
+}

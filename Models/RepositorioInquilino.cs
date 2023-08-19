@@ -11,10 +11,10 @@ public class RepositorioInquilino
     }
     public List<Inquilino> GetInquilinos()
     {
-        List<Inquilino> Inquilinos = new List<Inquilino>();
+        List<Inquilino> inquilinos = new List<Inquilino>();
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            var query = @"SELECT Id, Nombre, Apellido, DNI, Telefono, Email FROM Inquilinos";
+            var query = @"SELECT Id, Nombre, Apellido, DNI, Telefono, Email FROM inquilinos";
             using (var command = new MySqlCommand(query, connection))
             {
                 connection.Open();
@@ -22,7 +22,7 @@ public class RepositorioInquilino
                 {
                     while (reader.Read())
                     {
-                        Inquilino Inquilino = new Inquilino
+                        Inquilino inquilino = new Inquilino
                         {
                             Id = reader.GetInt32(nameof(Inquilino.Id)),
                             Nombre = reader.GetString(nameof(Inquilino.Nombre)),
@@ -31,13 +31,13 @@ public class RepositorioInquilino
                             Telefono = reader.GetString(nameof(Inquilino.Telefono)),
                             Email = reader.GetString(nameof(Inquilino.Email)),
                         };
-                        Inquilinos.Add(Inquilino);
+                        inquilinos.Add(inquilino);
                     }
                 }
             }
             connection.Close();
         }
-        return Inquilinos;
+        return inquilinos;
     }
 
     public int Alta(Inquilino Inquilino)
@@ -45,7 +45,7 @@ public class RepositorioInquilino
         int res = 0;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"INSERT INTO Inquilinos (Nombre, Apellido, DNI, Telefono, Email)
+            string query = @"INSERT INTO inquilinos (Nombre, Apellido, DNI, Telefono, Email)
                     VALUES (@Nombre, @Apellido, @DNI, @Telefono, @Email);
                     SELECT LAST_INSERT_ID();";
             using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -69,14 +69,8 @@ public class RepositorioInquilino
         Inquilino? p = null;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @$"
-                SELECT  Id, 
-                        Nombre, 
-                        Apellido, 
-                        Dni, 
-                        Telefono, 
-                        Email  
-					FROM Inquilinos
+            string query = @"SELECT Id, Nombre, Apellido, Dni, Telefono, Email  
+					FROM inquilinos
 					WHERE Id=@id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
@@ -107,7 +101,7 @@ public class RepositorioInquilino
         int res = -1;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"UPDATE Inquilinos 
+            string query = @"UPDATE inquilinos 
 					SET Nombre=@nombre, Apellido=@apellido, DNI=@DNI, Telefono=@telefono, Email=@email 
 					WHERE Id = @id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -132,7 +126,7 @@ public class RepositorioInquilino
         int res = -1;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = "DELETE FROM Inquilinos WHERE Id = @id";
+            string query = "DELETE FROM inquilinos WHERE Id = @id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 //command.CommandType = CommandType.Text;

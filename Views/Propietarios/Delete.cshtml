@@ -48,15 +48,9 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
     </dl>
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-success btn-block">  Volver  </a>
+    </form>
 
-     <div class="form-actions no-color">
-        <div class="row">
-            <div class="col-md-2">
-                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmDeleteModal">Eliminar</button>
-            </div>
-            <div class="col-md-10">
-                <a asp-action="Index" class="btn btn-success btn-block">  Volver  </a>
-            </div>
-        </div>
-    </div>
 </div>
