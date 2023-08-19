@@ -61,10 +61,10 @@
                 @Html.ActionLink("Borrar", "Delete", new { id=item.Id  })
                 </td>
             <td>
-				<a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span class="lnr lnr-pencil"></span></a>&nbsp;
-                <a asp-action="Details" asp-route-id="@item.Id" title="Detalles"><span class="fas fa-plus"></span></a>
-				<a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
-			</td>
+				@Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Detalle", "Details", new { id=item.Id  }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Borrar", "Delete", new { id=item.Id  }, new { @class = "btn btn-danger " })
+            </td>
         </tr>
 }
     </tbody>
