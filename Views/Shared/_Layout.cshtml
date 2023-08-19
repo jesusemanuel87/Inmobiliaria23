@@ -116,7 +116,10 @@
 		}
         </script>
 
-    @await RenderSectionAsync("Scripts", required: false)
-    
+
+@section Scripts{
+    @* @await RenderSectionAsync("Scripts", required: false) *@
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 </body>
 </html>
