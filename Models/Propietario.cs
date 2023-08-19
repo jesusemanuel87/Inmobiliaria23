@@ -15,20 +15,13 @@ public class Propietario
     public string DNI { get; set; }
 
     [Display(Name ="Teléfono")]
-    public string? Telefono { get; set; }
+    [Required]
+    public string Telefono { get; set; }
 
     [Required, EmailAddress]
     public string? Email { get; set; }
     public string? Clave { get; set; }
-    // public Propietario(string Nombre, string Apellido, string DNI, string Telefono, string Email, string Clave)
-    // {
-    //     this.Nombre = Nombre;
-    //     this.Apellido = Apellido;
-    //     this.DNI = DNI;
-    //     this.Telefono = Telefono;
-    //     this.Email = Email;
-    //     this.Clave = Clave;
-    // }    
+
     public override string ToString()
     {     
         return $"{Nombre} {Apellido}";

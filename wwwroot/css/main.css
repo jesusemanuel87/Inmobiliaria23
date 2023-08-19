@@ -10,7 +10,9 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  background-image: url('/img/fondo-web2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
   body > .container {
       padding: 60px 15px 0;
@@ -31,6 +33,7 @@ body {
           text-decoration: none;
       }
 
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
@@ -47,6 +50,18 @@ body {
   -ms-flex: 1;
   -webkit-box-flex: 1;
   flex: 1;
+}
+
+table {
+  width: 80%;
+}
+
+table td, table th {
+  padding: 10px;
+  font-size: 18px; 
+}
+.email-text {
+  color: #333333;
 }
 
 @media (min-width: 768px) {

@@ -6,9 +6,8 @@
 
 <h1>Propietarios</h1>
 
-<p>
-    <a asp-action="Create">Crear nuevo</a>
-</p>
+<a asp-action="Create" class="btn btn-success">Crear nuevo</a>
+<br>
 <table class="table">
     <thead>
         <tr>
@@ -52,14 +51,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
-            <td>
+            <td class="email-text">
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Detalle", "Details", new { id=item.Id  }) |
-                @Html.ActionLink("Borrar", "Delete", new { id=item.Id  })
-                </td>
+         
             <td>
 				@Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
                 @Html.ActionLink("Detalle", "Details", new { id=item.Id  }, new { @class = "btn btn-info" }) |

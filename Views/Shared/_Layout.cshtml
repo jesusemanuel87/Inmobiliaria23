@@ -8,7 +8,8 @@
 
 	<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
 	<link href="~/css/main.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+	<link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"/>
+	
 	<link rel="icon" href="~/img/favicon.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -50,9 +51,9 @@
 			@if (ViewBag.Id != null)
 			{//alta exitosa
 				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong>¡Éxito!</strong> La entidad fue dada de alta con id: @ViewBag.Id
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
+					<strong>¡Éxito!</strong> Fue dada de alta id: @ViewBag.Id
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 			}
@@ -69,9 +70,8 @@
 			{//alta exitosa
 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
 					<strong>¡Error!</strong> @ViewBag.Error
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
-					</button>
+					   <button aria-label="Close" onclick="document.getElementById('box').style.display='none';" class="close-button">X</button>				
+
 				</div>
 			}
 			else if (!String.IsNullOrWhiteSpace(ViewBag.Error))
@@ -105,6 +105,7 @@
 			<span class="text-muted">&copy; @DateTime.Today.Year - Inmobiliaria -  &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> <a class="float-right" href="#">Volver arriba</a></span>
 		</div>
 	</footer>
+	<script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

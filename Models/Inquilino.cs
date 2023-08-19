@@ -20,7 +20,7 @@ namespace Inmobiliaria23.Models;
             public string DNI { get; set; }
 
             [Display(Name ="Teléfono")]
-            public string? Telefono { get; set; }
+            public string Telefono { get; set; }
             [Required, EmailAddress]
             public string? Email { get; set; }
          public override string ToString()

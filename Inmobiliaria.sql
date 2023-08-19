@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `inquilinos` (
   `DNI` varchar(50) NOT NULL DEFAULT '',
   `Nombre` varchar(50) NOT NULL DEFAULT '',
   `Apellido` varchar(50) NOT NULL DEFAULT '',
-  `Telefono` varchar(50) NOT NULL DEFAULT '',
+  `Telefono` varchar(50) DEFAULT '',
   `Email` varchar(50) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `propietarios` (
   `DNI` varchar(50) NOT NULL DEFAULT '0',
   `Nombre` varchar(50) NOT NULL DEFAULT '0',
   `Apellido` varchar(50) NOT NULL DEFAULT '0',
-  `Telefono` varchar(50) NOT NULL DEFAULT '0',
+  `Telefono` varchar(50)  DEFAULT '0',
   `Email` varchar(50) NOT NULL,
   `Clave` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id`)
