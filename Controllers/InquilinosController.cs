@@ -10,11 +10,11 @@ namespace Inmobiliaria23.Controllers
 {
     public class InquilinosController : Controller
     {
-        private readonly RepositorioInquilino reProp;
+        private readonly InquilinoRepositorio reProp;
 
         public InquilinosController()
         {
-            reProp = new RepositorioInquilino();
+            reProp = new InquilinoRepositorio();
         }
         // GET: Inquilinos
   

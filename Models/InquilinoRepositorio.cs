@@ -2,19 +2,19 @@
 
 namespace Inmobiliaria23.Models;
 
-public class RepositorioPropietario
+public class InquilinoRepositorio
 {
     string connectionString = "Server=localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
-    public RepositorioPropietario()
+    public InquilinoRepositorio()
     {
 
     }
-    public List<Propietario> GetPropietarios()
+    public List<Inquilino> GetInquilinos()
     {
-        List<Propietario> propietarios = new List<Propietario>();
+        List<Inquilino> inquilinos = new List<Inquilino>();
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            var query = @"SELECT Id, Nombre, Apellido, DNI, Telefono, Email FROM propietarios";
+            var query = @"SELECT Id, Nombre, Apellido, DNI, Telefono, Email FROM inquilinos";
             using (var command = new MySqlCommand(query, connection))
             {
                 connection.Open();
@@ -22,55 +22,55 @@ public class RepositorioPropietario
                 {
                     while (reader.Read())
                     {
-                        Propietario propietario = new Propietario
+                        Inquilino inquilino = new Inquilino
                         {
-                            Id = reader.GetInt32(nameof(Propietario.Id)),
-                            Nombre = reader.GetString(nameof(Propietario.Nombre)),
-                            Apellido = reader.GetString(nameof(Propietario.Apellido)),
-                            DNI = reader.GetString(nameof(Propietario.DNI)),
-                            Telefono = reader.GetString(nameof(Propietario.Telefono)),
-                            Email = reader.GetString(nameof(Propietario.Email)),
+                            Id = reader.GetInt32(nameof(Inquilino.Id)),
+                            Nombre = reader.GetString(nameof(Inquilino.Nombre)),
+                            Apellido = reader.GetString(nameof(Inquilino.Apellido)),
+                            DNI = reader.GetString(nameof(Inquilino.DNI)),
+                            Telefono = reader.GetString(nameof(Inquilino.Telefono)),
+                            Email = reader.GetString(nameof(Inquilino.Email)),
                         };
-                        propietarios.Add(propietario);
+                        inquilinos.Add(inquilino);
                     }
                 }
             }
             connection.Close();
         }
-        return propietarios;
+        return inquilinos;
     }
 
-    public int Alta(Propietario Propietario)
+    public int Alta(Inquilino Inquilino)
     {
         int res = 0;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"INSERT INTO propietarios (Nombre, Apellido, DNI, Telefono, Email)
+            string query = @"INSERT INTO inquilinos (Nombre, Apellido, DNI, Telefono, Email)
                     VALUES (@Nombre, @Apellido, @DNI, @Telefono, @Email);
                     SELECT LAST_INSERT_ID();";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@Nombre", Propietario.Nombre);
-                command.Parameters.AddWithValue("@Apellido", Propietario.Apellido);
-                command.Parameters.AddWithValue("@DNI", Propietario.DNI);
-                command.Parameters.AddWithValue("@Telefono", Propietario.Telefono);
-                command.Parameters.AddWithValue("@Email", Propietario.Email);
+                command.Parameters.AddWithValue("@Nombre", Inquilino.Nombre);
+                command.Parameters.AddWithValue("@Apellido", Inquilino.Apellido);
+                command.Parameters.AddWithValue("@DNI", Inquilino.DNI);
+                command.Parameters.AddWithValue("@Telefono", Inquilino.Telefono);
+                command.Parameters.AddWithValue("@Email", Inquilino.Email);
                 connection.Open();
                 res = Convert.ToInt32(command.ExecuteScalar());
-                Propietario.Id = res;
+                Inquilino.Id = res;
                 connection.Close();
             }
         }
         return res;
     }
 
-    public Propietario GetPropietario(int id)
+    public Inquilino GetInquilino(int id)
     {
-        Propietario? p = null;
+        Inquilino? p = null;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             string query = @"SELECT Id, Nombre, Apellido, Dni, Telefono, Email  
-					FROM propietarios
+					FROM inquilinos
 					WHERE Id=@id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
@@ -80,9 +80,9 @@ public class RepositorioPropietario
                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    p = new Propietario
+                    p = new Inquilino
                     {
-                        Id = reader.GetInt32(nameof(Propietario.Id)),
+                        Id = reader.GetInt32(nameof(Inquilino.Id)),
                         Nombre = reader.GetString("Nombre"),
                         Apellido = reader.GetString("Apellido"),
                         DNI = reader.GetString("DNI"),
@@ -96,12 +96,12 @@ public class RepositorioPropietario
         return p;
     }
 
-    public int Modificacion(Propietario p)
+    public int Modificacion(Inquilino p)
     {
         int res = -1;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"UPDATE propietarios 
+            string query = @"UPDATE inquilinos 
 					SET Nombre=@nombre, Apellido=@apellido, DNI=@DNI, Telefono=@telefono, Email=@email 
 					WHERE Id = @id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -126,7 +126,7 @@ public class RepositorioPropietario
         int res = -1;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = "DELETE FROM propietarios WHERE Id = @id";
+            string query = "DELETE FROM inquilinos WHERE Id = @id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 //command.CommandType = CommandType.Text;

@@ -1,0 +1,101 @@
+@model Inmobiliaria23.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Create";
+    var ltaPropietarios = (IList<Propietario>)ViewBag.Propietarios;
+    var Propietario= ViewBag.Propietario;
+}
+
+<h1>Crear</h1>
+
+<h4>Inmueble</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ambientes" class="control-label"></label>
+                <input asp-for="Ambientes" class="form-control" />
+                <span asp-validation-for="Ambientes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Superficie" class="control-label"></label>
+                <input asp-for="Superficie" class="form-control" />
+                <span asp-validation-for="Superficie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Latitud" class="control-label"></label>
+                <input asp-for="Latitud" class="form-control" />
+                <span asp-validation-for="Latitud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitud" class="control-label"></label>
+                <input asp-for="Longitud" class="form-control" />
+                <span asp-validation-for="Longitud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+				<label class="control-label">Tipo de alquiler</label>
+				<select class="elSelect" name="Tipo">
+                    <option value="Casa" selected>Casa</option>
+                    <option value="Deposito">Deposito</option>
+                    <option value="Local">Local</option>
+                    <option value="Departamento">Departamento</option>
+				</select>
+				<span asp-validation-for="Tipo" class="text-danger"></span>
+			</div>
+            <div class="form-group">
+				<label class="control-label">Uso de inmueble</label>
+				<select class="elSelect" name="Uso">
+                    <option value="Comercial" selected>Comercial</option>
+                    <option value="Residencial">Residencial</option>
+				</select>
+				<span asp-validation-for="Uso" class="text-danger"></span>
+			</div>
+            @if(Propietario==0){
+            <div class="form-group">
+				<label class="control-label">Propietario</label>
+				<select class="elSelect" name="PropietarioId">
+					@foreach (var item in ltaPropietarios)
+					{
+						<option value="@item.Id">@(item.ToString())</option>
+					}
+				</select>
+				<span asp-validation-for="PropietarioId" class="text-danger"></span>
+			</div>
+            }else{
+                <div class="form-group">
+                <label asp-for="PropietarioId" class="control-label"></label>
+                <input asp-for="PropietarioId" class="form-control" value=@Propietario disabled/>
+                <span asp-validation-for="PropietarioId" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
+

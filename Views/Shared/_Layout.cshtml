@@ -48,51 +48,50 @@
     </header>
     <main role="main" class="container">
 		<div class="">
-			@if (ViewBag.Id != null)
-			{//alta exitosa
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong>¡Éxito!</strong> Fue dada de alta id: @ViewBag.Id
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-			}
-			else if (ViewBag.Mensaje != null)
-			{//cartel general
-				<div class="alert alert-info alert-dismissible fade show" role="alert">
-					<strong>Información:</strong> @ViewBag.Mensaje
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
-					</button>
-				</div>
-			}
-			else if (ViewBag.Error != null)
-			{//alta exitosa
-				<div class="alert alert-danger alert-dismissible fade show" role="alert">
-					<strong>¡Error!</strong> @ViewBag.Error
-					   <button aria-label="Close" onclick="document.getElementById('box').style.display='none';" class="close-button">X</button>				
-
-				</div>
-			}
-			else if (!String.IsNullOrWhiteSpace(ViewBag.Error))
-			{//ocurrió un error
-				<environment names="Development">
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<strong>¡Error!</strong> Ocurrió: @ViewBag.Error
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
-						</button>
-						<a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false"><span class="lnr lnr-plus-circle"></span></a>
-						<div class="collapse multi-collapse" id="multiCollapseExample1">
-							@ViewBag.StackTrace
-						</div>
-					</div>
-				</environment>
-			}
-			<div class="m-1 p-1">
-				@RenderBody()
-			</div>
-		</div>
+    @if (ViewBag.Id != null)
+    {//alta exitosa
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>¡Éxito!</strong> Fue dada de alta id: @ViewBag.Id
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    else if (ViewBag.Mensaje != null)
+    {//cartel general
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Información:</strong> @ViewBag.Mensaje
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
+            </button>
+        </div>
+    }
+    else if (ViewBag.Error != null)
+    {//alta exitosa
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>¡Error!</strong> @ViewBag.Error
+            <button aria-label="Close" onclick="document.getElementById('box').style.display='none';" class="close-button">X</button>                
+        </div>
+    }
+    else if (!String.IsNullOrWhiteSpace(ViewBag.Error))
+    {//ocurrió un error
+        <environment names="Development">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>¡Error!</strong> Ocurrió: @ViewBag.Error
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
+                </button>
+                <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false"><span class="lnr lnr-plus-circle"></span></a>
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    @ViewBag.StackTrace
+                </div>
+            </div>
+        </environment>
+    }
+    <div class="m-1 p-1">
+        @RenderBody()
+    </div>
+</div>
 	</main>
 
     @* <footer class="border-top footer text-muted">
@@ -117,9 +116,8 @@
         </script>
 
 @await RenderSectionAsync("Scripts", required: false)
-@* @section Scripts{
-    
-	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-} *@
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  
 </body>
 </html>
