@@ -1,0 +1,89 @@
+﻿@model Inmobiliaria23.Models.Usuario
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Perfil</h1>
+
+<h4>Usuario</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.Id" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" disabled/>
+                <span asp-validation-for="Id" class="text-danger" style="display: none;"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Avatar" class="control-label"></label><br />
+                @if (Model.Avatar != ""){
+                    <img src="@Model.Avatar" width="80"/>
+                } else {
+                    <p>Sin avatar</p>
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AvatarFile" class="control-label"></label>
+                <input type="file" name="AvatarFile" />
+                <span asp-validation-for="AvatarFile" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+<h4>Cambio de clave</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action = "CambiarPass" asp-route-id="@Model.Id" name="CambiarPass">
+            <div>
+                <label for="clave" class="control-label">Clave actual</label>
+                <input type="password" name="clave" id="clave" class="form-control">
+            </div>
+            <div>
+                <label for="claveNueva" class="control-label">Clave nueva</label>
+                <input type="password" name="claveNueva" id="claveNueva" class="form-control">
+            </div>
+            <div>
+                <label for="confirmarNueva" class="control-label">Confirmar nueva clave</label>
+                <input type="password" name="confirmarNueva" id="confirmarNueva" class="form-control">
+            </div>
+            
+
+            <div class="form-group">
+                <input type="submit" value="Cambiar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Administración";
+}
+<h1>@ViewData["Title"]</h1>
+
+<h1>Acceso Restringido</h1>
+
+<p>No tiene permisos suficientes para acceder.</p>
+        
+@Html.ActionLink("Salir", "Logout", null, new { @class = "btn btn-primary" })

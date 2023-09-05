@@ -1,0 +1,61 @@
+﻿@model Inmobiliaria23.Models.Pago
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Pago</h1>
+
+<h4>Pago</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" disabled/>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FechaPagado" class="control-label"></label>
+                <input asp-for="FechaPagado" class="form-control" id="FechaPago"/>
+                <span asp-validation-for="FechaPagado" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Importe" class="control-label">
+                    (Importe mensual
+                    @Html.DisplayFor(modelItem => modelItem.contrato.Precio)).
+                    <br>  
+                    Abonar
+                </label>
+                <input asp-for="Importe" class="form-control"/>
+                <span asp-validation-for="Importe" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Mes" class="control-label"></label>
+                <input asp-for="Mes" class="form-control" disabled/>
+                <span asp-validation-for="Mes" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ContratoId" class="control-label"></label>
+                <input asp-for="ContratoId" class="form-control" disabled/>
+                <span asp-validation-for="ContratoId" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

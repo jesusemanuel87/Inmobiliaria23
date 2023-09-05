@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria23.Models;
 
@@ -15,8 +17,30 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        ViewBag.Titulo = "Página de Inicio";
         return View();
     }
+
+    [Authorize]
+    public ActionResult Seguro()
+    {
+        var identity = (ClaimsIdentity)User.Identity;
+        IEnumerable<Claim> claims = identity.Claims;
+        return View(claims);
+    }
+
+    [Authorize(Policy = "Admin")]
+    public ActionResult Admin()
+    {
+        return View();
+    }
+
+    public ActionResult Restringido()
+    {
+        return View();
+    }
+
+    //Colocar código de CAMBIAR CLAIMS !!!!!!!!!!!!!!!!!!!!!!!!!!
 
     public IActionResult Privacy()
     {

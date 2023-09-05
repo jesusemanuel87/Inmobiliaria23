@@ -3,8 +3,6 @@ CREATE DATABASE IF NOT EXISTS `inmobiliaria`;
 USE `inmobiliaria`;
 
 
- 
-
 CREATE TABLE IF NOT EXISTS `inquilinos` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `DNI` varchar(50) NOT NULL DEFAULT '',

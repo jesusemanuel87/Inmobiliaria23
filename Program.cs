@@ -1,24 +1,38 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
-
-
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+        {
+            options.LoginPath = "/Usuarios/Login";
+            options.LogoutPath = "/Usuarios/Logout";
+            options.AccessDeniedPath = "/Home/Restringido";
+        });
+
+builder.Services.AddAuthorization(options =>
+    {
+        //options.AddPolicy("Empleado", policy => policy.RequireClaim(ClaimTypes.Role, "Administrador", "Empleado"));
+        options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "SuperAdmin"));
+    });
+
+
 var app = builder.Build();
-
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 app.MapControllerRoute(
     name: "default",

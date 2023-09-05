@@ -1,123 +1,140 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    @* <title>@ViewData["Title"] - Inmobiliaria </title> *@
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Inmobiliaria -</title>
 
-	<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-	<link href="~/css/main.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"/>
-	
-	<link rel="icon" href="~/img/favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" /> 
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/Inmobiliaria23.styles.css" asp-append-version="true" />
 
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Inmobiliaria23.styles.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"/>
+        
+        <link rel="icon" href="~/img/favicon.png" type="image/x-icon" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" defer></script>
 
-    @RenderSection("Styles", false)
-	<title>@ViewBag.Title</title>
+        
 
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  bg-dark  border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <div class="navbar-text-container"></div>
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area=""  asp-controller="Propietarios" asp-action="Index">Propietarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area=""  asp-controller="Inquilinos" asp-action="Index">Inquilinos</a>
-                            </li>
-                        </ul>
+        @RenderSection("Styles", false)
+        <title>@ViewBag.Title</title>
+
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  bg-dark  border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <div class="navbar-text-container"></div>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area=""  asp-controller="Propietarios" asp-action="Index">Propietarios</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area=""  asp-controller="Inquilinos" asp-action="Index">Inquilinos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area=""  asp-controller="Inmuebles" asp-action="Index">Inmuebles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area=""  asp-controller="Contratos" asp-action="Index">Contratos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area=""  asp-controller="Pagos" asp-action="Index">Pagos</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <main role="main" class="container">
-		<div class="">
-    @if (ViewBag.Id != null)
-    {//alta exitosa
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>¡Éxito!</strong> Fue dada de alta id: @ViewBag.Id
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    }
-    else if (ViewBag.Mensaje != null)
-    {//cartel general
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Información:</strong> @ViewBag.Mensaje
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
-            </button>
-        </div>
-    }
-    else if (ViewBag.Error != null)
-    {//alta exitosa
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>¡Error!</strong> @ViewBag.Error
-            <button aria-label="Close" onclick="document.getElementById('box').style.display='none';" class="close-button">X</button>                
-        </div>
-    }
-    else if (!String.IsNullOrWhiteSpace(ViewBag.Error))
-    {//ocurrió un error
-        <environment names="Development">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>¡Error!</strong> Ocurrió: @ViewBag.Error
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
-                </button>
-                <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false"><span class="lnr lnr-plus-circle"></span></a>
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                    @ViewBag.StackTrace
-                </div>
-            </div>
-        </environment>
-    }
-    <div class="m-1 p-1">
-        @RenderBody()
-    </div>
-</div>
-	</main>
-
-    @* <footer class="border-top footer text-muted">
+            </nav>
+        </header>
         <div class="container">
-            &copy; 2023 - Inmobiliaria23 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <main role="main" class="pb-3">
+                <div class="">
+                    @if (ViewBag.Id != null)
+                    {//alta exitosa
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>¡Éxito!</strong> Fue dada de alta id: @ViewBag.Id
+                            @* <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> *@
+                        </div>
+                    }
+                    else if (ViewBag.Mensaje != null)
+                    {//cartel general
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>Información:</strong> @ViewBag.Mensaje
+                            @* <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> *@
+                        </div>
+                    }
+                    else if (ViewBag.Error != null)
+                    {//alta exitosa
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>¡Error!</strong> @ViewBag.Error
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
+                                </button>
+                        </div>
+                    }
+                    else if (!String.IsNullOrWhiteSpace(ViewBag.Error))
+                    {//ocurrió un error
+                        <environment names="Development">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>¡Error!</strong> Ocurrió: @ViewBag.Error
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false"><span class="lnr lnr-plus-circle"></span></a>
+                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                    @ViewBag.StackTrace
+                                </div>
+                            </div>
+                        </environment>
+                    }
+                    <div class="m-1 p-1">
+                        @RenderBody()
+                    </div>
+                </div>
+            </main>
         </div>
-    </footer> *@
-    <footer class="footer">
-		<div class="container">
-			<span class="text-muted">&copy; @DateTime.Today.Year - Inmobiliaria -  &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> <a class="float-right" href="#">Volver arriba</a></span>
-		</div>
-	</footer>
-	<script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script type="text/javascript">
-		function init() {
-			$('.alert').alert();
-		}
-        </script>
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">&copy; @DateTime.Today.Year - Inmobiliaria -  &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> <a class="float-right" href="#">Volver arriba</a></span>
+            </div>
+        </footer>
 
-@await RenderSectionAsync("Scripts", required: false)
+        <script src="https://kit.fontawesome.com/53d3fcf520.js" crossorigin="anonymous"></script>
 
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-  
-</body>
+
+        <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+        <script type="text/javascript">
+            function init() {
+                $('.alert').alert();
+            }
+            </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    </body>
 </html>

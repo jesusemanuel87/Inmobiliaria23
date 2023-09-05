@@ -7,28 +7,73 @@
     
     <br>
 
-    <div class="d-flex justify-content-center">
-        <div class="card m-2">
-            <div class="card-body">
-                <h5 class="card-title">Propietarios</h5>
-                <p class="card-text">Accede a la lista de propietarios.</p>
-                <a href="/Propietarios" class="btn btn-primary">Ver Propietarios</a>
+    <h4>Logeo: <a href="/Usuarios/Login">Ingreso de usuarios</a>.</h4>
+    <br>
+
+    @if (User.Identity.IsAuthenticated){
+
+        <div class="d-flex justify-content-center">
+
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title">Propietarios</h5>
+                    <p class="card-text">Accede a la lista de propietarios.</p>
+                    <a href="/Propietarios" class="btn btn-primary">Ver Propietarios</a>
+                </div>
             </div>
-        </div>
-        <div class="card m-2">
-            <div class="card-body">
-                <h5 class="card-title">Inquilinos</h5>
-                <p class="card-text">Accede a la lista de inquilinos.</p>
-                <a href="/Inquilinos" class="btn btn-primary">Ver Inquilinos</a>
+
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title">Inquilinos</h5>
+                    <p class="card-text">Accede a la lista de inquilinos.</p>
+                    <a href="/Inquilinos" class="btn btn-primary">Ver Inquilinos</a>
+                </div>
             </div>
-        </div>
-        <div class="card m-2">
-            <div class="card-body">
-                <h5 class="card-title">Inmuebles</h5>
-                <p class="card-text">Accede a la lista de inmuebles.</p>
-                <a href="/Inmuebles" class="btn btn-primary">Ver Inmuebles</a>
+
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title">Inmuebles</h5>
+                    <p class="card-text">Accede a la lista de inmuebles.</p>
+                    <a href="/Inmuebles" class="btn btn-primary">Ver Inmuebles</a>
+                </div>
             </div>
+
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title">Contratos</h5>
+                    <p class="card-text">Accede a la lista de contratos.</p>
+                    <a href="/Contratos" class="btn btn-primary">Ver Contratos</a>
+                </div>
+            </div>
+
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title">Pagos</h5>
+                    <p class="card-text">Accede a la lista de pagos.</p>
+                    <a href="/Pagos" class="btn btn-primary">Ver Pagos</a>
+                </div>
+            </div>
+
+            @if(User.IsInRole("Admin")){
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">Accede a la lista de usuarios.</p>
+                        <a href="/Usuarios" class="btn btn-primary">Ver Usuarios</a>
+                    </div>
+                </div>
+            }else{
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">Accede a tu perfil</p>
+                        <a href="/Usuarios/Perfil" class="btn btn-primary">Mi perfil</a>
+                    </div>
+                </div>
+            }
+
         </div>
-    </div>
+
+    }
     
 </div>

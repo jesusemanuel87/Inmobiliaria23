@@ -1,0 +1,61 @@
+﻿@model Inmobiliaria23.Models.Pago
+
+@{
+    ViewData["Title"] = "Create";
+    var ltaContratos = (IList<Contrato>)ViewBag.Contratos;
+    var Contrato = ViewBag.Contrato;
+}
+
+<h1>Crear</h1>
+
+<h4>Pago</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FechaPagado" class="control-label"></label>
+                <input asp-for="FechaPagado" class="form-control" />
+                <span asp-validation-for="FechaPagado" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Mes" class="control-label"></label>
+                <input asp-for="Mes" class="form-control" />
+                <span asp-validation-for="Mes" class="text-danger"></span>
+            </div>
+            
+            @if(Contrato==null){
+            <div class="form-group">
+				<label class="control-label">Contrato</label>
+				<select class="elSelect" name="ContratoId">
+					@foreach (var item in ltaContratos)
+					{
+						<option value="@item.Id">@(item.ToString())</option>
+					}
+				</select>
+				<span asp-validation-for="ContratoId" class="text-danger"></span>
+			</div>
+            }else{
+                <div class="form-group">
+                <label asp-for="ContratoId" class="control-label"></label>
+                <input asp-for="ContratoId" class="form-control" value=@Contrato.Id disabled/>
+                <span asp-validation-for="ContratoId" class="text-danger"></span>
+            </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="Importe" class="control-label"></label>
+                <input asp-for="Importe" class="form-control" />
+                <span asp-validation-for="Importe" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>

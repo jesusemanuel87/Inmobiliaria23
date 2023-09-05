@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+}
+<h1>@ViewData["Title"]</h1>
+
+<h1>Home Seguro</h1>
+
+    <p>Usuario autenticado. Su identificación es @User?.Identity?.Name</p>
+
+    <p>FullName es @User?.Claims.First(x => x.Type == "FullName").Value</p>
+
+    <p>Lista de claims:</p>
+        <ul>
+            @foreach (var c in User.Claims)
+            {
+                <li><b>@(c.Type+": ")</b>@c.Value</li>
+            }
+        </ul>
+        
+@Html.ActionLink("Salir", "Logout", "Usuarios", null, new { @class = "btn btn-primary" })

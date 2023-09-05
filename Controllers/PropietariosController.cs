@@ -1,45 +1,42 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Inmobiliaria23.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria23.Controllers
 {
     public class PropietariosController : Controller
     {
-        private readonly PropietarioRepositorio reProp;
+        private readonly PropietarioRepositorio repositorio;
 
         public PropietariosController()
         {
-            reProp = new PropietarioRepositorio();
+            repositorio = new PropietarioRepositorio();
         }
         // GET: Propietarios
-  
+    [Authorize]
         public ActionResult Index()
         {
-            var lista = reProp.GetPropietarios();
+            var lista = repositorio.GetPropietarios();
             if (TempData.ContainsKey("Id"))
                 ViewBag.Id = TempData["Id"];
             if (TempData.ContainsKey("Mensaje"))
                 ViewBag.Mensaje = TempData["Mensaje"];
             return View(lista);
-            // List<Propietario> propietarios = reProp.GetPropietarios();
+            // List<Propietario> propietarios = repositorio.GetPropietarios();
             // return View(propietarios);
         }
 
         // GET: Propietarios/Details/5
-     
+     [Authorize]
         public ActionResult Details(int id)
         {
-            var propietario = reProp.GetPropietario(id);
+            var propietario = repositorio.GetPropietario(id);
             return View(propietario);
         }
 
         // GET: Propietarios/Create
        [HttpGet]
+       [Authorize]
         public ActionResult Create()
         {
             if (TempData.ContainsKey("Mensaje"))
@@ -50,12 +47,13 @@ namespace Inmobiliaria23.Controllers
         // POST: Propietarios/Create
         [HttpPost]
         [ValidateAntiForgeryToken]   
+        [Authorize]
         public ActionResult Create(Propietario propietario)
         {
             try
             {                
                 if (ModelState.IsValid) {
-                    reProp.Alta(propietario);
+                    repositorio.Alta(propietario);
                     TempData["Id"] = propietario.Id;
                     return RedirectToAction(nameof(Index));
                 }
@@ -71,9 +69,10 @@ namespace Inmobiliaria23.Controllers
 
         // GET: Propietarios/Edit/5
        [HttpGet]
+       [Authorize]
         public ActionResult Edit(int id)
         {
-            var prop = reProp.GetPropietario(id);
+            var prop = repositorio.GetPropietario(id);
             return View(prop);
         }
 
@@ -81,19 +80,20 @@ namespace Inmobiliaria23.Controllers
         // POST: Propietarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         
         public ActionResult Edit(int id, Propietario collection) //, Propietario collection
         {
             Propietario p = new Propietario();
             try
             {
-                p = reProp.GetPropietario(id);
+                p = repositorio.GetPropietario(id);
                 p.Nombre = collection.Nombre;
                 p.Apellido = collection.Apellido;
                 p.DNI = collection.DNI;
                 p.Telefono = collection.Telefono;
                 p.Email = collection.Email;
-                if (reProp.Modificacion(p) > 0)
+                if (repositorio.Modificacion(p) > 0)
                 {
                     TempData["Mensaje"] = "Datos guardados correctamente";
                 }
@@ -106,12 +106,12 @@ namespace Inmobiliaria23.Controllers
         }
 
         // GET: Propietarios/Delete/5
-       
+       [Authorize(Policy = "Admin")]
         public ActionResult Delete(int id)
         {
             try
             {
-                var prop = reProp.GetPropietario(id);
+                var prop = repositorio.GetPropietario(id);
                 return View(prop);
             }
             catch (System.Exception)
@@ -124,13 +124,14 @@ namespace Inmobiliaria23.Controllers
 
         // POST: Propietarios/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]       
-        public ActionResult Delete(int id, Propietario entidad)
+        [ValidateAntiForgeryToken]     
+        [Authorize(Policy = "Admin")]  
+        public ActionResult Delete(int id, Propietario inmueble)
         {
             try
             {
                 
-                if (reProp.Baja(id) > 0)
+                if (repositorio.Baja(id) > 0)
                 {
                     TempData["Mensaje"] = "Eliminación realizada correctamente";
                 }

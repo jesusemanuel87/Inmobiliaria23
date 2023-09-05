@@ -2,12 +2,35 @@
 
 @{
     ViewData["Title"] = "Index";
+    var Propietario = ViewBag.Propietario;
 }
 
 <h1>Inmuebles</h1>
 
 <a asp-action="Create" class="btn btn-success">Crear nuevo</a>
 <br>
+
+<h5>Disponibilidad por fecha</h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Disponibles">
+            <div class="form-group">
+                <label for="fechaInicio" class="control-label">Fecha desde</label>
+                <input type="date" name="fechaInicio" for="fechaInicio" class="form-control" required/>
+            
+                <label for="fechaFin" class="control-label">Fecha hasta</label>
+                <input type="date" name="fechaFin" for="fechaFin" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+
+
 <table class="table">
     <thead>
         <tr>
@@ -30,19 +53,13 @@
                 @Html.DisplayNameFor(model => model.Superficie)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Latitud)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitud)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PropietarioId)
+                Propietario
             </th>
             <th></th>
         </tr>
@@ -69,23 +86,21 @@
                 @Html.DisplayFor(modelItem => item.Superficie)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Latitud)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Longitud)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Precio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PropietarioId)
+                 @(item.Duenio.Nombre + " " + item.Duenio.Apellido)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Detalle", "Details", new { id=item.Id  }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) 
+            </td>
+            <td>
+                @Html.ActionLink("Detalle", "Details", new { id=item.Id  }, new { @class = "btn btn-info" })
+                </td>
+                <td>
                 @Html.ActionLink("Borrar", "Delete", new { id=item.Id  }, new { @class = "btn btn-danger " })
             </td>
         </tr>
