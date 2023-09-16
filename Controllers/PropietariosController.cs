@@ -13,7 +13,7 @@ namespace Inmobiliaria23.Controllers
             repositorio = new PropietarioRepositorio();
         }
         // GET: Propietarios
-    [Authorize]
+   // [Authorize]
         public ActionResult Index()
         {
             var lista = repositorio.GetPropietarios();

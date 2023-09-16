@@ -12,7 +12,7 @@ public enum enRoles
 	{
 		SuperAdmin = 1,
 		Admin = 2,
-		Empleado = 3
+		Empleado = 0,
 	}
     public class Usuario
         {
@@ -43,7 +43,7 @@ public enum enRoles
 
             public int Rol { get; set; }
             [NotMapped]
-            public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
+            public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "Empleado";
 
             public static IDictionary<int, string> ObtenerRoles()
             {

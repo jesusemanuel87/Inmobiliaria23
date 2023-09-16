@@ -55,3 +55,46 @@ CREATE TABLE IF NOT EXISTS `inmuebles` (
 INSERT INTO `inmuebles` (`Id`, `Direccion`, `Ambientes`, `Superficie`, `Latitud`, `Longitud`, `PropietarioId`, `Tipo`, `Precio`, `Estado`, `Uso`) VALUES
 	(10, 'Mirador 1 C 22', 4, 70, -33.257433, -66.334202, 42, 'Casa', 60000, 1, 'Residencial'),
 	(11, 'Mirador 2 C 10', 3, 60, -33.258196,  -66.334191, 43, 'Departamento', 50000, 1, 'Comercial');
+
+
+-- Volcando estructura para tabla inmobiliaria.contratos
+CREATE TABLE IF NOT EXISTS `contratos` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `FechaInicio` datetime NOT NULL,
+  `FechaFin` datetime DEFAULT NULL,
+  `Precio` decimal(20,6) NOT NULL,
+  `InquilinoId` int(11) NOT NULL,
+  `InmuebleId` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `FK_contratos_inquilinos` (`InquilinoId`),
+  KEY `FK_contratos_inmuebles` (`InmuebleId`),
+  CONSTRAINT `FK_contratos_inmuebles` FOREIGN KEY (`InmuebleId`) REFERENCES `inmuebles` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_contratos_inquilinos` FOREIGN KEY (`InquilinoId`) REFERENCES `inquilinos` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+
+
+-- Volcando estructura para tabla inmobiliaria.pagos
+CREATE TABLE IF NOT EXISTS `pagos` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Mes` int(11) NOT NULL,
+  `FechaPagado` datetime DEFAULT NULL,
+  `ContratoId` int(11) NOT NULL,
+  `Importe` decimal(20,6) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `FK_pagos_contratos` (`ContratoId`),
+  CONSTRAINT `FK_pagos_contratos` FOREIGN KEY (`ContratoId`) REFERENCES `contratos` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
+
+
+-- Volcando estructura para tabla inmobiliaria.usuarios
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rol` int(11) NOT NULL,
+  `Nombre` varchar(50) DEFAULT NULL,
+  `Apellido` varchar(50) DEFAULT NULL,
+  `Email` varchar(50) DEFAULT NULL,
+  `Clave` varchar(50) DEFAULT NULL,
+  `Avatar` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+

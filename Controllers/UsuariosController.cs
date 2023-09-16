@@ -17,23 +17,24 @@ public class UsuariosController : Controller
         public UsuariosController(IWebHostEnvironment environment, IConfiguration configuration)
         {
             repositorioUsuario = new UsuarioRepositorio();
-            environment = environment;
-            configuration = configuration;
+            this.environment = environment;
+            this.configuration = configuration;
         }
 
         
         // GET: Usuarios
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Index()
         {
+             var usuario = repositorioUsuario.GetUsuarios();
             try
             {
+                if (TempData.ContainsKey("Id"))
+                    ViewBag.Mensaje = TempData["Id"];
                 if (TempData.ContainsKey("Mensaje"))
-                {
-                    ViewBag.Mensaje = TempData["Mensaje"];
-                }
-                var lista = repositorioUsuario.GetUsuarios();
-                return View(lista);
+				    ViewBag.Mensaje = TempData["Mensaje"];
+               
+                return View(usuario);
             }
             catch (Exception ex)
             {
@@ -45,7 +46,7 @@ public class UsuariosController : Controller
 
 
         // GET: Usuarios/Details/5
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Details(int id)
         {
             return View();
@@ -53,24 +54,24 @@ public class UsuariosController : Controller
 
 
         // GET: Usuarios/Create
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.Roles = Usuario.ObtenerRoles();
+           ViewBag.Roles = Usuario.ObtenerRoles();
             return View();
         }
 
         // POST: Usuarios/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Create(Usuario u)
         {
             try
             {
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                                 password: u.Clave,
-                                salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                                salt: System.Text.Encoding.ASCII.GetBytes("Salt"),
                                 prf: KeyDerivationPrf.HMACSHA1,
                                 iterationCount: 1000,
                                 numBytesRequested: 256 / 8));
@@ -109,7 +110,7 @@ public class UsuariosController : Controller
         }
 
         // GET: Usuarios/Edit/5
-        [Authorize]
+       [Authorize]
         public ActionResult Perfil()
         {
             // if (TempData.ContainsKey("Id"))
@@ -119,12 +120,11 @@ public class UsuariosController : Controller
             ViewData["Title"] = "Mi perfil";
             var u = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
             ViewBag.Roles = Usuario.ObtenerRoles();
-           // return View("Perfil", u);
-            return View("Edit", u);
+            return View("Perfil", u);
         }
 
         // GET: Usuarios/Edit/5
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Edit(int id)
         {
             ViewData["Title"] = "Editar usuario";
@@ -181,7 +181,7 @@ public class UsuariosController : Controller
                 {
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                                 password: user.Clave,
-                                salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                                salt: System.Text.Encoding.ASCII.GetBytes("Salt"),
                                 prf: KeyDerivationPrf.HMACSHA1,
                                 iterationCount: 1000,
                                 numBytesRequested: 256 / 8));
@@ -190,7 +190,7 @@ public class UsuariosController : Controller
                 }
 
                 TempData["Mensaje"] = "Datos guardados correctamente";
-                if (!User.IsInRole("Admin")) { return RedirectToAction(nameof(Perfil)); }
+               if (!User.IsInRole("Admin")) { return RedirectToAction(nameof(Perfil)); }
                 return RedirectToAction(nameof(Index));
 
             }
@@ -262,7 +262,7 @@ public class UsuariosController : Controller
         }
 
         // GET: Usuarios/Delete/5
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Delete(int id)
         {
             var u = repositorioUsuario.GetUsuario(id);
@@ -272,7 +272,7 @@ public class UsuariosController : Controller
         // POST: Usuarios/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult Eliminar(int id)
         {
             try
@@ -297,7 +297,7 @@ public class UsuariosController : Controller
             }
         }
 
-        [AllowAnonymous]
+       [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             TempData["returnUrl"] = returnUrl;
@@ -311,12 +311,12 @@ public class UsuariosController : Controller
         {
             try
             {
-                var returnUrl = String.IsNullOrEmpty(TempData["returnUrl"] as string) ? "/Home" : TempData["returnUrl"].ToString();
+                var returnUrl = String.IsNullOrEmpty(TempData["returnUrl"] as string) ? "/Home/index" : TempData["returnUrl"].ToString();
                 if (ModelState.IsValid)
                 {
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                         password: login.Clave,
-                        salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                        salt: System.Text.Encoding.ASCII.GetBytes("Salt"),
                         prf: KeyDerivationPrf.HMACSHA1,
                         iterationCount: 1000,
                         numBytesRequested: 256 / 8));
@@ -345,8 +345,8 @@ public class UsuariosController : Controller
                     TempData.Remove("returnUrl");
                     return Redirect(returnUrl);
                 }
-                TempData["returnUrl"] = returnUrl;
-                return View();
+                //TempData["returnUrl"] = returnUrl;
+                return View("Index");
             }
             catch (Exception ex)
             {

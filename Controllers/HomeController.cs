@@ -17,7 +17,19 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        ViewBag.Titulo = "Página de Inicio";
+         ViewBag.Id = TempData["Id"];
+        if (TempData.ContainsKey("Mensaje"))
+        {
+            ViewBag.Mensaje = TempData["Mensaje"];
+        }
+        return View();
+    }
+
+     public IActionResult Login()
+    {
+        return View();
+    }
+    public IActionResult Restringido(){
         return View();
     }
 
@@ -29,13 +41,8 @@ public class HomeController : Controller
         return View(claims);
     }
 
-    [Authorize(Policy = "Admin")]
+   [Authorize(Policy = "Admin")]
     public ActionResult Admin()
-    {
-        return View();
-    }
-
-    public ActionResult Restringido()
     {
         return View();
     }

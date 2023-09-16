@@ -11,7 +11,7 @@ public class UsuarioRepositorio
         List<Usuario> usuarios = new List<Usuario>();
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            var query = @"SELECT Id, Nombre, Apellido, Avatar, Email, Clave, Rol FROM Usuarios";
+            var query = @"SELECT Id, Nombre, Apellido, Avatar, Email, Clave, Rol FROM usuarios";
 
             using (var command = new MySqlCommand(query, connection))
             {
@@ -46,7 +46,7 @@ public class UsuarioRepositorio
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             string query =  @"SELECT Id, Nombre, Apellido, Avatar, Email, Clave, Rol 
-                                FROM Usuarios  WHERE Id=@id";
+                                FROM usuarios  WHERE Id=@id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 command.Parameters.Add("@id", MySqlDbType.Int16).Value = id;
@@ -77,7 +77,7 @@ public class UsuarioRepositorio
         int res = -1;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"INSERT INTO Usuarios 
+            string query = @"INSERT INTO usuarios 
                                     (Nombre, Apellido, Avatar, Email, Clave, Rol) 
                                 VALUES (@nombre, @apellido, @avatar, @email, @clave, @rol);
                                 SELECT LAST_INSERT_ID();";
@@ -154,7 +154,7 @@ public class UsuarioRepositorio
         Usuario? p = null;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @"SELECT Id, Nombre, Apellido, Avatar, Email, Clave, Rol FROM Usuarios WHERE Email=@email";
+            string query = @"SELECT Id, Nombre, Apellido, Avatar, Email, Clave, Rol FROM usuarios WHERE Email=@email";
            
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
