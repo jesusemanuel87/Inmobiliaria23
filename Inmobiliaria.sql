@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS `propietarios` (
 
 -- Volcando datos para la tabla inmobiliaria.propietarios: ~2 rows (aproximadamente)
 INSERT INTO `propietarios` (`Id`, `DNI`, `Nombre`, `Apellido`, `Telefono`, `Email`, `Clave`) VALUES
-	('40','35456987', 'Josesito', 'Perez', '265712354', 'josesito1@mail.com', NULL),
-	('41','36987456', 'Pepito ', 'Calavera', '266489654', 'pepito1@mail.com', NULL);
+	('42','35456987', 'Josesito', 'Perez', '265712354', 'josesito1@mail.com', NULL),
+	('43','36987456', 'Pepito ', 'Calavera', '266489654', 'pepito1@mail.com', NULL);
 
 CREATE TABLE IF NOT EXISTS `inmuebles` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -98,3 +98,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
+INSERT INTO usuarios (`Id`, `Rol`, `Nombre`, `Apellido`, `Email`, `Clave`, `Avatar`)
+VALUES
+(1, 1, 'super', 'admin', 'super@admin.com', 'E/zh+45aglQiblqcon2qUcgvgXVFTCTD0TMjxgKd+Jw=', '/Uploads/avatar_1e3242c18-0e60-4e54-90ec-14992097b3a0.jpg'),
+(2, 2, 'admin', 'administrador', 'admin@admin.com', '6ugOPWwpWbTbGkQ8fBkqSfLLZYEHnP3rQeGMoU19X2c=', '/Uploads/avatar_2a83acc33-78ad-4c0c-97d4-d812630dd128.jpg'),
+(18, 0, 'empleado', 'user', 'user@user.com', '+4cWislMwro46T/A/NDTcbi1PKD9b2O/KsvJE2NMykg=', '/Uploads/sinFoto.png');
