@@ -31,6 +31,7 @@ namespace Inmobiliaria23.Controllers
         public ActionResult Details(int id)
         {
             var inquilino = repositorio.GetInquilino(id);
+            inquilino.Contratos = repositorio.ObtenerContratosDelInquilino(id);
             return View(inquilino);
         }
 

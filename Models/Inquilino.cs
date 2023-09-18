@@ -23,6 +23,8 @@ namespace Inmobiliaria23.Models;
             public string Telefono { get; set; }
             [Required, EmailAddress]
             public string? Email { get; set; }
+
+            public ICollection<Contrato> Contratos { get; set; }
          public override string ToString()
     {     
         return $"{Nombre} {Apellido}";

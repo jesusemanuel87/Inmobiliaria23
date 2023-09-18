@@ -30,14 +30,15 @@ public enum enRoles
             
             
             [Required, EmailAddress]
-            public string? Email { get; set; }
+            public string Email { get; set; }
 
             [Required, DataType(DataType.Password)]
             public string Clave { get; set; }
 
 
-            public string? Avatar { get; set; }
-            [NotMapped]
+            public string? Avatar { get; set; } //AvatarUrl
+
+            [NotMapped] //para Entity Framework
             public IFormFile? AvatarFile { get; set; }
 
 

@@ -31,6 +31,8 @@ public class ContratosController : Controller
                     ViewBag.Id = TempData["Id"];
                 if (TempData.ContainsKey("Mensaje"))
                     ViewBag.Mensaje = TempData["Mensaje"];
+                if (TempData.ContainsKey("MensajeError"))
+                    ViewBag.Error = TempData["MensajeError"];
                 return View(lista);
             }
             catch (System.Exception)
@@ -139,7 +141,6 @@ public class ContratosController : Controller
         {
             try
             {
-                // TODO: Add insert logic here
                 Contrato controlFecha;
                 var inmueble = (collection.InmuebleId == 0) ? collection.Id : collection.InmuebleId;
                 controlFecha = contratoRepositorio.comprobarFechas(inmueble, collection.FechaInicio, collection.FechaFin);
@@ -167,7 +168,7 @@ public class ContratosController : Controller
                     var meses = diferencia.Days / 30;
                     if (meses == 0) { meses = 1; }
                     Console.WriteLine("Cantidad de meses: " + meses);
-                    for (int i = 0; i < meses; i++)
+                    for (int i = 1; i < meses; i++)
                     {
                         var pago = new Pago();
                         pago.Mes = i;
@@ -251,7 +252,7 @@ public class ContratosController : Controller
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public ActionResult Eliminar(int id)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
@@ -264,7 +265,9 @@ public class ContratosController : Controller
             }
             catch
             {
-                return View();
+                //return View();
+                TempData["MensajeError"] = "No se puede eliminar el inquilino debido a contratos vinculados.";
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -312,7 +315,7 @@ public class ContratosController : Controller
                     Id = contrato.Id,
                 };
 
-                if (collection.Precio <= 0 || collection.FechaFin == null)
+                if (collection.Precio <= 0) // || collection.FechaFin == null)
                 {
                     TempData["Mensaje"] = "Complete campos fecha y precio";
                     return RedirectToAction(nameof(Renovar));

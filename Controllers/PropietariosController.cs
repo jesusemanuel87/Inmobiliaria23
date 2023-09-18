@@ -7,13 +7,12 @@ namespace Inmobiliaria23.Controllers
     public class PropietariosController : Controller
     {
         private readonly PropietarioRepositorio repositorio;
-
         public PropietariosController()
         {
             repositorio = new PropietarioRepositorio();
         }
         // GET: Propietarios
-   // [Authorize]
+   [Authorize]
         public ActionResult Index()
         {
             var lista = repositorio.GetPropietarios();
@@ -21,6 +20,8 @@ namespace Inmobiliaria23.Controllers
                 ViewBag.Id = TempData["Id"];
             if (TempData.ContainsKey("Mensaje"))
                 ViewBag.Mensaje = TempData["Mensaje"];
+             if (TempData.ContainsKey("MensajeError"))
+                ViewBag.Error = TempData["MensajeError"];
             return View(lista);
             // List<Propietario> propietarios = repositorio.GetPropietarios();
             // return View(propietarios);
@@ -31,8 +32,11 @@ namespace Inmobiliaria23.Controllers
         public ActionResult Details(int id)
         {
             var propietario = repositorio.GetPropietario(id);
+            // Cargar explícitamente los inmuebles relacionados
+            propietario.Inmuebles = repositorio.ObtenerInmueblesDelPropietario(id);
             return View(propietario);
         }
+
 
         // GET: Propietarios/Create
        [HttpGet]
@@ -40,7 +44,13 @@ namespace Inmobiliaria23.Controllers
         public ActionResult Create()
         {
             if (TempData.ContainsKey("Mensaje"))
-                ViewBag.Mensaje = TempData["Mensaje"];
+                {
+                    ViewBag.Mensaje = TempData["Mensaje"];
+                }
+                else if (TempData.ContainsKey("Error"))
+                {
+                    ViewBag.Error = TempData["Error"];
+                }
             return View();
         }
 
@@ -113,8 +123,9 @@ namespace Inmobiliaria23.Controllers
             {
                 var prop = repositorio.GetPropietario(id);
                 return View(prop);
+                
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 
                 throw;
@@ -124,22 +135,24 @@ namespace Inmobiliaria23.Controllers
 
         // POST: Propietarios/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]     
-        [Authorize(Policy = "Admin")]  
-        public ActionResult Delete(int id, Propietario inmueble)
+        [ValidateAntiForgeryToken]  
+        [Authorize(Policy = "Admin")]     
+        public ActionResult Delete(int id, IFormCollection collection)
+
         {
             try
             {
+                repositorio.Baja(id);
                 
-                if (repositorio.Baja(id) > 0)
-                {
-                    TempData["Mensaje"] = "Eliminación realizada correctamente";
-                }
+                    TempData["Mensaje"] = "Se eliminó correctamente";
+                
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                //throw; //return View();
+                TempData["MensajeError"] = "No se puede eliminar el propietario debido a inmuebles vinculados.";
+                return RedirectToAction(nameof(Index));
             }
         }
     }

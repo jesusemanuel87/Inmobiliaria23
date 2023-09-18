@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `propietarios` (
   `Apellido` varchar(50) NOT NULL DEFAULT '0',
   `Telefono` varchar(50)  DEFAULT '0',
   `Email` varchar(50) NOT NULL,
-  `Clave` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 

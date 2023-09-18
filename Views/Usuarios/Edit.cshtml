@@ -39,12 +39,12 @@
 
 			<div class="form-group">
 				<label asp-for="Clave" class="control-label"></label>
-				<input asp-for="Clave" class="form-control" />
+				<input asp-for="Clave" class="form-control" value="@Model.Clave"/>
 				<span asp-validation-for="Clave" class="text-danger"></span>
 			</div>
 
-			@* @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
-			{ *@
+			@if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+			{
 				<div class="form-group">
 					<label class="control-label">Rol</label>
 					<select class="form-control" name="Rol">
@@ -55,15 +55,15 @@
 					</select>
 					<span asp-validation-for="Rol" class="text-danger"></span>
 				</div>
-			@* } *@
+			}
 
 			<div class="form-group">
 				<label asp-for="Avatar" class="control-label"></label><br />
 				@if (Model.Avatar != "")
 				{
-					<img src="@Model.Avatar" width="80"/>
+					<img src="@Model.Avatar" width="100px"/>
 				}else{
-					<p>Sin avatar</p>
+					<img src="\Uploads\sinFoto.png" width="100px">
 				}
 			</div>
             

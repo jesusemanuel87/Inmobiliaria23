@@ -1,5 +1,4 @@
 ﻿
-
 $(document).ready(function () {
     $("#borrarPago").click(function (event) {
       $("#FechaPago").val(null);
@@ -14,23 +13,11 @@ $(document).ready(function () {
     $(".alert").alert();
   };
 
-$(document).ready(function () {
-  $(".table").DataTable({
-    language: {
-      lengthMenu: "Mostrar _MENU_ registros por página",
-      zeroRecords: "Nada que mostrar",
-      info: "Página _PAGE_ de _PAGES_",
-      infoEmpty: "No hay nada",
-      infoFiltered: "(filtered from _MAX_ total records)",
-      search: "Buscar:",
-      paginate: {
-        previous: "Pagina previa",
-        next: "Pagina siguiente",
-      },
-    },
-  });
+  $(document).ready(function () {
+    setTimeout(function () {
+        $(".alert").alert('close');
+    }, 5000); // 5000 milisegundos (5 segundos)
 });
-
 $(document).ready(function () {
   // Setup - add a text input to each footer cell
   $(".tableplus thead tr")
@@ -79,7 +66,6 @@ $(document).ready(function () {
               $(this).attr("title", $(this).val());
               var regexr = "({search})"; //$(this).parents('th').find('select').val();
 
-              var cursorPosition = this.selectionStart;
               // Search the column for that value
               api
                 .column(colIdx)
@@ -95,12 +81,30 @@ $(document).ready(function () {
             .on("keyup", function (e) {
               e.stopPropagation();
 
-              $(this).trigger("change");
-              $(this)
-                .focus()[0]
-                .setSelectionRange(cursorPosition, cursorPosition);
+              if (e.key === "Enter") {
+                // Detect Enter key press and trigger change event
+                $(this).trigger("change");
+              }
             });
         });
+    },
+  });
+});
+
+
+$(document).ready(function () {
+  $(".table").DataTable({
+    language: {
+      lengthMenu: "Mostrar _MENU_ registros por página",
+      zeroRecords: "Nada que mostrar",
+      info: "Página _PAGE_ de _PAGES_",
+      infoEmpty: "No hay nada",
+      infoFiltered: "(filtered from _MAX_ total records)",
+      search: "Buscar:",
+      paginate: {
+        previous: "Pagina previa",
+        next: "Pagina siguiente",
+      },
     },
   });
 });

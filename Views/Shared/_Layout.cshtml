@@ -7,10 +7,10 @@
     <title>@ViewData["Title"] - Inmobiliaria -</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Inmobiliaria23.styles.css" asp-append-version="true" />
 
+    @* <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" /> *@
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css" />
 
     <link rel="icon" href="~/img/favicon.png" type="image/x-icon" />
@@ -18,18 +18,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" defer></script>
 
-
-
-    @* @RenderSection("Styles", false) *@
-
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  bg-dark  border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <div class="navbar-text-container"></div>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria</a>
+                @* <div class="navbar-text-container"></div> *@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><strong>Inmobiliaria JE</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -61,7 +57,7 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Pagos"
                                 asp-action="Index">Pagos</a>
                         </li>
-                        @if (User.IsInRole("Administrador"))
+                        @if (User.IsInRole("SuperAdmin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="Usuarios"
@@ -70,12 +66,12 @@
                             }
                             else
                             {
-                                <li class="nav-item">
+                                <li class="nav-item center-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="Usuarios" asp-action="Perfil">Mi
                                         Perfil</a>
                                 </li>
                             }
-                            <li class="nav-item">
+                            <li class="nav-item center-item">
                                 <a class="nav-link text-light" href="/salir">Deslogear</a>
                             </li>
                         }
@@ -89,30 +85,31 @@
         <main role="main" class="pb-3">
             <div class="">
                 @if (ViewBag.Id != null)
-                {//alta exitosa
+                {
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>¡Éxito!</strong> Fue dada de alta id: @ViewBag.Id
-                        @* <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button> *@
+                       
                     </div>
                 }
                 else if (ViewBag.Mensaje != null)
                 {//cartel general
                     <div class="alert alert-info alert-dismissible fade show" role="alert">
                         <strong>Información:</strong> @ViewBag.Mensaje
-                        @* <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button> *@
+                        
+                    </div>
+                }
+                else if (ViewBag.MensajeError != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>¡Error!</strong> @ViewBag.MensajeError
+                       
                     </div>
                 }
                 else if (ViewBag.Error != null)
-                {//alta exitosa
+                {
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <strong>¡Error!</strong> @ViewBag.Error
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><span class="lnr lnr-cross-circle"></span></span>
-                        </button>
+                        
                     </div>
                 }
                 else if (!String.IsNullOrWhiteSpace(ViewBag.Error))
@@ -151,14 +148,11 @@
     <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-
-    @* <script type="text/javascript">
-        function init() {
-            $('.alert').alert();
-        }
-    </script> *@
 
     @await RenderSectionAsync("Scripts", required: false)
 

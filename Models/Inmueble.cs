@@ -27,15 +27,16 @@ public class Inmueble
 
     public int? Estado { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:C}")]
     public decimal? Precio { get; set; }    
-    public int PropietarioId { get; set; }
+    public int PropietarioId { get; set; } = 0;
 
     [ForeignKey(nameof(PropietarioId))]
-    public Propietario? Duenio { get; set; }
+    public Propietario? Propietario { get; set; }
 
     public override string ToString()
     {     
-        return $"Codigo: {Id}, Direccion: {Direccion}";
+        return $"Id({Id}) {Direccion}";
     }
 
     

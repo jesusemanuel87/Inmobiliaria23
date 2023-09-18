@@ -41,6 +41,6 @@ namespace Inmobiliaria23.Models;
     
     public override string ToString()
     {
-        return $"Id Pago: {Id}, Mes N°: {Mes}, Contrato Id: {ContratoId}";
+        return $"Id({Id}),Mes:{Mes},Contrato:{ContratoId}";
     }
 }

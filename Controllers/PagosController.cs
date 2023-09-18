@@ -165,7 +165,7 @@ namespace Inmobiliaria23.Controllers
         }
 
         // GET: Pagos/Delete/5
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = "Admin")]
         public ActionResult Delete(int id)
         {
             var lista = rePago.GetPago(id);
@@ -175,7 +175,7 @@ namespace Inmobiliaria23.Controllers
         // POST: Pagos/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = "Admin")]
         public ActionResult Eliminar(int id)
         {
             try

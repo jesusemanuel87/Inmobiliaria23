@@ -8,12 +8,11 @@
 
 <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-address-card style="color: #000000;"></i>   Crear nuevo</a>
 <br>
+<br>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -31,16 +30,13 @@
             </th>
             
             <th>
-                Editar | Detalle | Eliminar | Propiedades
+                Accion
             </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -58,11 +54,10 @@
             </td>
          
             <td>
-				@Html.ActionLink("   ", "Edit", new { id=item.Id }, new { @class = "fas fa-edit btn btn-primary" })   |
-                @Html.ActionLink("", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-info" }) |
-                @Html.ActionLink("Borrar", "Delete", new { id=item.Id  }, new { @class = "btn btn-danger " }) |
-                <a asp-action="PorPropietario" asp-controller="Inmuebles" asp-route-id="@item.Id" title="Mis Propiedades"><span class="lnr lnr-apartment btn btn-secondary"></span></a>
-                @Html.ActionLink("Mis Propiedades", "PorPropietario", "Inmuebles", new { id= item.Id })
+                @Html.ActionLink(" ", "Edit", new { id=item.Id }, new { @class = "fas fa-edit btn btn-primary rounded-circle", title = "Editar"  })  
+                @Html.ActionLink(" ", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-secondary rounded-circle", title = "Detalle"  }) 
+                @if(User.IsInRole("Admin") || User.IsInRole("SuperAdmin" )){ @Html.ActionLink(" ", "Delete", new { id=item.Id  }, new { @class = "fa-solid fa-trash-can btn btn-danger rounded-circle", title = "Eliminar"  })}
+                @Html.ActionLink(" ", "Propietario", "Inmuebles", new { id= item.Id }, new { @class="lnr lnr-apartment btn btn-warning rounded-circle", title = "Propiedades" })
             </td>
         </tr>
 }

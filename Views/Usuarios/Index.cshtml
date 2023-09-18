@@ -56,9 +56,9 @@
 			</td>
          
             <td>
-				@Html.ActionLink("   ", "Edit", new { id=item.Id }, new { @class = "fas fa-edit btn btn-primary" })   |
-                @Html.ActionLink("", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-info" }) |
-                @Html.ActionLink("Borrar", "Delete", new { id=item.Id  }, new { @class = "btn btn-danger " })                 
+				@Html.ActionLink("   ", "Edit", new { id=item.Id }, new { @class = "fas fa-edit btn btn-primary rounded-circle", title = "Editar" })  
+                @* @Html.ActionLink("", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-info rounded-circle", title = "Detalle" }) *@
+                @if(User.IsInRole("SuperAdmin" )){ @Html.ActionLink(" ", "Delete", new { id=item.Id  }, new { @class = "fa-solid fa-trash-can btn btn-danger rounded-circle", title = "Eliminar"  })}
             </td>
         </tr>
 }

@@ -30,7 +30,7 @@
 
 
 
-<table class="table">
+<table class="tableplus">
     <thead>
         <tr>
              <th>
@@ -53,7 +53,7 @@
             </th>
             
             <th>
-                Editar | Detalle | Eliminar | Propiedades
+                Accion
             </th>
         </tr>
     </thead>
@@ -70,25 +70,20 @@
                 @Html.DisplayFor(modelItem => item.FechaFin)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.inquilino.Nombre)
-                @Html.DisplayFor(modelItem => item.inquilino.Apellido)
+                @item.inquilino.ToString()                
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.propietario.Nombre)
-                @Html.DisplayFor(modelItem => item.propietario.Apellido)
+                @item.propietario.ToString()            
             </td>
             <td>
                 @item.inmueble.ToString()
-            </td>
-         
+            </td>         
             <td>
-                @Html.ActionLink("Detalle", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-info" }) |
-				@Html.ActionLink("Renovar", "Renovar", new { id=item.Id }, new { @class = "fas fa-edit btn btn-primary" })   |
-                @Html.ActionLink("Terminar", "Terminar", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-info" }) |
-                <a href="/Pagos/Contrato/@item.Id" title="Pagos"><span class="fa-solid fa-cash-register"></span></a> |
-                @if(User.IsInRole("Administrador")){  
-                                @Html.ActionLink("", "Delete", new { id=item.Id },new { @class = "fas fa-remove"})
-                                }            
+                @Html.ActionLink("", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-secondary rounded-circle", title = "Detalle"  })
+                @Html.ActionLink("", "Renovar", new {  id=item.Id },new { @class = "fas fa-calendar-plus btn btn-primary rounded-circle", title = "Renovar" })
+                @Html.ActionLink("", "Terminar", new {  id=item.Id },new { @class = "fas fa-calendar-minus btn btn-warning rounded-circle", title = "Terminar" }) 
+                <a href="/Pagos/Contrato/@item.Id" title="Pagos" class="fa-solid fa-file-invoice-dollar btn btn-success rounded-circle"></a>
+                @if(User.IsInRole("Admin") || User.IsInRole("SuperAdmin" )){ @Html.ActionLink(" ", "Delete", new { id=item.Id  }, new { @class = "fa-solid fa-trash-can btn btn-danger rounded-circle", title = "Eliminar"  })}
             </td>
         </tr>
     }

@@ -23,7 +23,9 @@
         <dt class = "col-sm-2">   @Html.DisplayNameFor(model => model.Email)      </dt>
         <dd class = "col-sm-10">  @Html.DisplayFor(model => model.Email)          </dd>
     </dl>
-    <form asp-action="Delete" method="post" asp-route-id=@Model.Id>
+    <form asp-action="Delete"> 
+
+    @* </form> method="post" asp-route-id=@Model.Id> *@
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index" class="btn btn-success btn-block">  Volver  </a>
     </form>

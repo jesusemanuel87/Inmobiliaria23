@@ -16,7 +16,7 @@ public class InmuebleRepositorio
         {
             var query = @"SELECT i.Id, Direccion, Ambientes, Superficie, Latitud, Longitud, 
             PropietarioId, Tipo, p.Nombre, p.Apellido, Estado, Precio, Uso  
-            FROM inmuebles i INNER JOIN Propietarios p ON i.PropietarioId = p.Id";
+            FROM inmuebles i INNER JOIN propietarios p ON i.PropietarioId = p.Id";
 
             using (var command = new MySqlCommand(query, connection))
             {
@@ -38,7 +38,7 @@ public class InmuebleRepositorio
                             Estado = reader.GetInt32(10),
                             Precio = (reader.IsDBNull(11)) ? 0 : reader.GetDecimal(11),//reader.GetDouble(11),
                             Uso = reader.GetString(12),
-                            Duenio = new Propietario
+                            Propietario = new Propietario
                             {
                                 Id = reader.GetInt32(6),
                                 Nombre = reader.GetString(8),
@@ -111,12 +111,12 @@ public class InmuebleRepositorio
                         Superficie = reader.GetInt32("Superficie"),
                         Latitud = reader.GetDecimal("Latitud"),
                         Longitud = reader.GetDecimal("Longitud"),
-                        PropietarioId = reader.GetInt32("PropietarioId"),
+                        PropietarioId = (reader.IsDBNull(11)) ? 0 :reader.GetInt32("PropietarioId"),
                         Tipo = reader.GetString("Tipo"),
                         Estado = reader.GetInt32("Estado"),
                         Precio = (reader.IsDBNull(11)) ? 0 : reader.GetDecimal(11),
                         Uso = reader.GetString("Uso"),
-                        Duenio = new Propietario
+                        Propietario = new Propietario
                         {
                             Id = reader.GetInt32("Id"),
                             Nombre = reader.GetString("Nombre"),
@@ -209,7 +209,7 @@ public class InmuebleRepositorio
                         Estado = reader.GetInt32(10),
                         Precio = reader.GetDecimal(11),
                         Uso = reader.GetString(12),
-                        Duenio = new Propietario
+                        Propietario = new Propietario
                         {
                             Id = reader.GetInt32(6),
                             Nombre = reader.GetString(8),
@@ -255,7 +255,7 @@ public class InmuebleRepositorio
                             Estado = reader.GetInt32(10),
                             Precio = (reader.IsDBNull(11)) ? 0 : reader.GetDecimal(11),//reader.GetDouble(11),
                             Uso = reader.GetString(12),
-                            Duenio = new Propietario
+                            Propietario = new Propietario
                             {
                                 Id = reader.GetInt32(6),
                                 Nombre = reader.GetString(8),
@@ -283,7 +283,7 @@ public class InmuebleRepositorio
             LEFT JOIN contratos c ON i.Id = c.InmuebleId
             WHERE c.Id IS NULL
             OR i.Id NOT IN (SELECT InmuebleId    
-            FROM Contratos c 
+            FROM contratos c 
             INNER JOIN inmuebles i
 			ON  c.InmuebleId = i.Id
 			WHERE @desde BETWEEN c.FechaInicio AND c.FechaFin 
@@ -310,7 +310,7 @@ public class InmuebleRepositorio
                             Estado = reader.GetInt32(8),
                             Precio = (reader.IsDBNull(9)) ? 0 : reader.GetDecimal(9),//reader.GetDouble(11),
                             Uso = reader.GetString(10),
-                            Duenio = new Propietario
+                            Propietario = new Propietario
                             {
                                 Id = reader.GetInt32(6),
                                 Nombre = reader.GetString(11),

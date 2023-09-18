@@ -67,7 +67,7 @@ namespace Inmobiliaria23.Controllers
             ViewBag.Propietario = id;
             if (lista.Count != 0)
             {
-                ViewBag.Mensaje = "Inmuebles del propietario: " + lista[0].Duenio.Nombre + " " + lista[0].Duenio.Apellido;
+                ViewBag.Mensaje = "Inmuebles del propietario: " + lista[0].Propietario?.Nombre + " " + lista[0].Propietario?.Apellido;
             }
             return View("Index", lista);
         }
@@ -76,6 +76,7 @@ namespace Inmobiliaria23.Controllers
         [Authorize]
         public ActionResult Details(int id)
         {
+            ViewBag.Propietarios = propietarioRepositorio.GetPropietarios();
             var inmueble = inmuebleRepositorio.GetInmueble(id);
             return View(inmueble);
         }
@@ -94,7 +95,7 @@ namespace Inmobiliaria23.Controllers
 
                 return View();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

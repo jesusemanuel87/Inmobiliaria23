@@ -86,7 +86,7 @@ public class UsuarioRepositorio
                 command.Parameters.AddWithValue("@nombre", Usuario.Nombre);
                 command.Parameters.AddWithValue("@apellido", Usuario.Apellido);
                     if (String.IsNullOrEmpty(Usuario.Avatar))
-                        command.Parameters.AddWithValue("@avatar", DBNull.Value);
+                        command.Parameters.AddWithValue("@avatar","/Uploads/sinFoto.png");
                     else
                         command.Parameters.AddWithValue("@avatar", Usuario.Avatar);
                 command.Parameters.AddWithValue("@email", Usuario.Email);

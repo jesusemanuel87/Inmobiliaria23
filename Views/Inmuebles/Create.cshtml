@@ -14,11 +14,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Direccion" class="control-label"></label>
                 <input asp-for="Direccion" class="form-control" />
@@ -36,21 +32,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Latitud" class="control-label"></label>
-                <input asp-for="Latitud" class="form-control" />
+                <input asp-for="Latitud" class="form-control" value="-33"/>
                 <span asp-validation-for="Latitud" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Longitud" class="control-label"></label>
-                <input asp-for="Longitud" class="form-control" />
+                <input asp-for="Longitud" class="form-control" value="-66"/>
                 <span asp-validation-for="Longitud" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Precio" class="control-label"></label>
+                <label asp-for="Precio" class="control-label" ></label>
                 <input asp-for="Precio" class="form-control" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
-
-
+            <br>
             <div class="form-group">
 				<label class="control-label">Tipo de alquiler</label>
 				<select class="elSelect" name="Tipo">
@@ -61,6 +56,7 @@
 				</select>
 				<span asp-validation-for="Tipo" class="text-danger"></span>
 			</div>
+            <br>
             <div class="form-group">
 				<label class="control-label">Uso de inmueble</label>
 				<select class="elSelect" name="Uso">
@@ -69,6 +65,7 @@
 				</select>
 				<span asp-validation-for="Uso" class="text-danger"></span>
 			</div>
+            <br>
             @if(Propietario==0){
             <div class="form-group">
 				<label class="control-label">Propietario</label>
@@ -87,15 +84,13 @@
                 <span asp-validation-for="PropietarioId" class="text-danger"></span>
                 </div>
             }
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <br>
+             <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver</a>
-</div>
 

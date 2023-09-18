@@ -36,8 +36,11 @@ public class HomeController : Controller
     [Authorize]
     public ActionResult Seguro()
     {
-        var identity = (ClaimsIdentity)User.Identity;
-        IEnumerable<Claim> claims = identity.Claims;
+        // var identity = (ClaimsIdentity)User.Identity;
+        // IEnumerable<Claim> claims = identity.Claims;
+        // return View(claims);
+        var identity = User.Identity as ClaimsIdentity;
+        IEnumerable<Claim> claims = identity?.Claims ?? Enumerable.Empty<Claim>();
         return View(claims);
     }
 

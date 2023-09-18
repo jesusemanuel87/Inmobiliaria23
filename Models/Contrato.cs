@@ -19,8 +19,9 @@ namespace Inmobiliaria23.Models;
             
             [Display(Name = "Fecha Fin")]
             public DateTime FechaFin { get; set; }
+            [Required]
 
-
+            [DisplayFormat(DataFormatString = "{0:C}")]
             public decimal? Precio { get; set; }
 
 
@@ -29,12 +30,18 @@ namespace Inmobiliaria23.Models;
             [ForeignKey(nameof(InquilinoId))]
 
 
-
             [Display(Name = "Inmueble Id")]
             public int InmuebleId { get; set; }
             [ForeignKey(nameof(InmuebleId))]
 
-
+            [NotMapped]
+            public string InmuebleDescripcion
+            {
+                get
+                {
+                    return inmueble != null ? inmueble.Direccion : "Sin inmueble";
+                }
+            }
             public Inquilino inquilino { get; set; }
             public Inmueble inmueble { get; set; }
             public Propietario propietario { get; set; }
@@ -52,11 +59,11 @@ namespace Inmobiliaria23.Models;
                     this.inquilino = inquilino;
                     this.inmueble = inmueble;
                     this.propietario = propietario;
-                }
 
+                }
 
          public override string ToString()
     {     
-        return "Contrato ID: " + Id;
+        return "Contrato: " + Id;
     }
 }

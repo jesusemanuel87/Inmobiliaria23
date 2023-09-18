@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data;
+using Humanizer;
+using MySql.Data.MySqlClient;
 
 namespace Inmobiliaria23.Models;
 
@@ -64,6 +66,45 @@ public class InquilinoRepositorio
         return res;
     }
 
+    public List<Contrato> ObtenerContratosDelInquilino(int inquilinoId)
+        {
+            List<Contrato> contratos = new List<Contrato>();
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = @"SELECT c.Id AS ContratoId, c.InmuebleId, c.FechaInicio, c.FechaFin, c.Precio , i.Direccion, i.Tipo
+                                FROM contratos c
+                                INNER JOIN inmuebles i ON c.InmuebleId = i.Id
+                                WHERE InquilinoId = @inquilinoId";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@inquilinoId", MySqlDbType.Int16).Value = inquilinoId;
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Contrato contrato = new Contrato
+                        {
+                            Id = reader.GetInt32("ContratoId"),
+                            InmuebleId = reader.GetInt32("InmuebleId"),
+                            FechaInicio = reader.GetDateTime("FechaInicio"),
+                            FechaFin = reader.GetDateTime("FechaFin"),
+                            Precio = reader.GetDecimal("Precio"),
+                            inmueble = new Inmueble
+                            {
+                                Id = reader.GetInt32("InmuebleId"),
+                                Tipo = reader.GetString("Tipo"),
+                                Direccion = reader.GetString("Direccion"),
+                            }                                                     
+                        };
+                        contratos.Add(contrato);
+                    }
+                    connection.Close();
+                }
+            }
+            return contratos;
+        }
+
     public Inquilino GetInquilino(int id)
     {
         Inquilino? p = null;
@@ -75,7 +116,7 @@ public class InquilinoRepositorio
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 command.Parameters.Add("@id", MySqlDbType.Int16).Value = id;
-                //command.CommandType = CommandType.Text;
+                command.CommandType = CommandType.Text;
                 connection.Open();
                 var reader = command.ExecuteReader();
                 if (reader.Read())
@@ -88,6 +129,7 @@ public class InquilinoRepositorio
                         DNI = reader.GetString("DNI"),
                         Telefono = reader.GetString("Telefono"),
                         Email = reader.GetString("Email"),
+                        Contratos = new List<Contrato>()
                     };
                 }
                 connection.Close();
@@ -106,7 +148,7 @@ public class InquilinoRepositorio
 					WHERE Id = @id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                // command.CommandType = CommandType.Text;
+                command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@id", p.Id);
                 command.Parameters.AddWithValue("@nombre", p.Nombre);
                 command.Parameters.AddWithValue("@apellido", p.Apellido);
@@ -129,7 +171,7 @@ public class InquilinoRepositorio
             string query = "DELETE FROM inquilinos WHERE Id = @id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                //command.CommandType = CommandType.Text;
+                command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@id", id);
                 connection.Open();
                 res = command.ExecuteNonQuery();

@@ -3,18 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Inquilinos</h1>
 
-
 <a asp-action="Create" class="btn btn-success">Crear nuevo</a>
+<br>
 <br>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -30,15 +26,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th></th>
+            <th>
+                Accion
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -46,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Apellido)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DNI)
+                @Html.DisplayFor(modelItem => item.DNI)                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Telefono)
@@ -55,10 +50,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Detalle", "Details", new { id=item.Id  }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Borrar", "Delete", new { id=item.Id  }, new { @class = "btn btn-danger " })
-            </td>
+                @Html.ActionLink(" ", "Edit", new { id=item.Id }, new { @class = "fas fa-edit btn btn-primary rounded-circle", title = "Editar"  })  
+                @Html.ActionLink(" ", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-secondary rounded-circle", title = "Detalle"  }) 
+                @if(User.IsInRole("Admin") || User.IsInRole("SuperAdmin" )){ @Html.ActionLink(" ", "Delete", new { id=item.Id  }, new { @class = "fa-solid fa-trash-can btn btn-danger rounded-circle", title = "Eliminar"  })}
+             </td>
         </tr>
 }
     </tbody>

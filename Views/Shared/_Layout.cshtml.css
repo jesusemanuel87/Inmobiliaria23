@@ -31,6 +31,17 @@ a.navbar-brand {
   background-color: #333;
 }
 
+.nav-menu {
+  display: flex;
+  justify-content: space-between; /* Alinea los elementos a los extremos (izquierda y derecha) */
+  list-style: none;
+  padding: 0;
+}
+
+.center-item {
+  text-align: center; /* Centra el contenido del elemento */
+}
+
 a {
   color: #0077cc;
 }
@@ -73,8 +84,6 @@ button.accept-policy {
   color: #ddd;
 }
 
-
-/* Estilo para las tarjetas en el navbar */
 .card-link {
   text-decoration: none;
 }

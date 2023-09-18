@@ -45,9 +45,10 @@
                 <div class="form-group">
                     <label class="control-label">Inmueble</label>
                     <select class="elSelect" name="InmuebleId">
+                        <option value="0" selected>Seleccione una opcion</option>
                         @foreach (var item in ltaInmuebles)
                         {
-                            <option value="@item.Id">@(item.ToString()+", Precio sugerido: "+item.Precio)</option>;
+                            <option value="@item.Id">@(item.ToString()+",Precio sugerido: $"+item.Precio)</option>;
                         }
                     </select>
                     <span asp-validation-for="InmuebleId" class="text-danger"></span>

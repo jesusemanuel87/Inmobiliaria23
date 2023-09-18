@@ -36,7 +36,7 @@ public class UsuariosController : Controller
                
                 return View(usuario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return View();
@@ -89,7 +89,7 @@ public class UsuariosController : Controller
                     var nbreRnd = Guid.NewGuid();
                     string fileName = "avatar_" + u.Id + nbreRnd + Path.GetExtension(u.AvatarFile.FileName);
                     string pathCompleto = Path.Combine(path, fileName);
-                    u.Avatar = @"/Uploads/" + fileName;                     
+                    u.Avatar = Path.Combine("/Uploads", fileName);                     
                     using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
                     {
                         u.AvatarFile.CopyTo(stream);
@@ -102,7 +102,7 @@ public class UsuariosController : Controller
                 }
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.Roles = Usuario.ObtenerRoles();
                 return View();
@@ -194,7 +194,7 @@ public class UsuariosController : Controller
                 return RedirectToAction(nameof(Index));
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -265,19 +265,26 @@ public class UsuariosController : Controller
        [Authorize(Policy = "Admin")]
         public ActionResult Delete(int id)
         {
+            try
+            {
             var u = repositorioUsuario.GetUsuario(id);
             return View(u);
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
         }
 
         // POST: Usuarios/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
        [Authorize(Policy = "Admin")]
-        public ActionResult Eliminar(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
-                // TODO: Add delete logic here
                 var u = repositorioUsuario.GetUsuario(id);
                 var ruta = @"wwwroot" + u.Avatar;
 
@@ -286,8 +293,7 @@ public class UsuariosController : Controller
                     if (System.IO.File.Exists(ruta))
                     {
                         System.IO.File.Delete(ruta);
-                    }
-                    TempData["Mensaje"] = "Eliminación realizada correctamente";
+                    }                   
                 }
                 return RedirectToAction(nameof(Index));
             }

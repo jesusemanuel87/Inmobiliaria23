@@ -80,6 +80,7 @@
     </dl>
     
     <form asp-action="Delete">
+        <input type="hidden" asp-for="PropietarioId" value="" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Volver</a>
     </form>
