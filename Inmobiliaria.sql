@@ -21,18 +21,18 @@ INSERT INTO `inquilinos` (`Id`, `DNI`, `Nombre`, `Apellido`, `Telefono`, `Email`
 
 CREATE TABLE IF NOT EXISTS `propietarios` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `DNI` varchar(50) NOT NULL DEFAULT '0',
-  `Nombre` varchar(50) NOT NULL DEFAULT '0',
-  `Apellido` varchar(50) NOT NULL DEFAULT '0',
-  `Telefono` varchar(50)  DEFAULT '0',
+  `DNI` varchar(50) NOT NULL UNIQUE,
+  `Nombre` varchar(50) NOT NULL DEFAULT '',
+  `Apellido` varchar(50) NOT NULL DEFAULT '',
+  `Telefono` varchar(50) NOT NULL DEFAULT '',
   `Email` varchar(50) NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla inmobiliaria.propietarios: ~2 rows (aproximadamente)
-INSERT INTO `propietarios` (`Id`, `DNI`, `Nombre`, `Apellido`, `Telefono`, `Email`, `Clave`) VALUES
-	('42','35456987', 'Josesito', 'Perez', '265712354', 'josesito1@mail.com', NULL),
-	('43','36987456', 'Pepito ', 'Calavera', '266489654', 'pepito1@mail.com', NULL);
+INSERT INTO `propietarios` (`DNI`, `Nombre`, `Apellido`, `Telefono`, `Email`) VALUES
+	('35456987', 'Josesito', 'Perez', '265712354', 'josesito1@mail.com'),
+	('36987456', 'Pepito ', 'Calavera', '266489654', 'pepito1@mail.com');
 
 CREATE TABLE IF NOT EXISTS `inmuebles` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,

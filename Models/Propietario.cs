@@ -8,18 +8,18 @@ public class Propietario
     [Display(Name ="Id")]
     public int Id { get; set; }
     [Required]
-    public string? Nombre { get; set; }
+    public string Nombre { get; set;}="";
     [Required]
-    public string? Apellido { get; set; }
+    public string Apellido { get; set;}="";
     [Required]
-    public string DNI { get; set; }
+    public string DNI { get; set;}="";
 
+    [Required]
     [Display(Name ="Teléfono")]
-    [Required]
-    public string? Telefono { get; set; }
+    public string Telefono { get; set;}="";
 
-    [Required, EmailAddress]
-    public string? Email { get; set; }
+    [Required,EmailAddress]
+    public string Email { get; set; }="";
 
     public ICollection<Inmueble> Inmuebles { get; set; }
     

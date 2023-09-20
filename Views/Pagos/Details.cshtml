@@ -28,7 +28,7 @@
         <dd class = "col-sm-10"> @Html.DisplayFor(model => model.contrato.Precio)  </dd>
 
         <dt class = "col-sm-2">  Deuda       </dt>
-        <dd class = "col-sm-10"> @deuda      </dd>
+        <dd class = "col-sm-10"> @deuda.ToString("C")      </dd>
 
         <dt class = "col-sm-2">  @Html.DisplayNameFor(model => model.ContratoId)   </dt>
         <dd class = "col-sm-10"> @Html.DisplayFor(model => model.ContratoId)       </dd>

@@ -42,14 +42,17 @@ namespace Inmobiliaria23.Models;
                     return inmueble != null ? inmueble.Direccion : "Sin inmueble";
                 }
             }
-            public Inquilino inquilino { get; set; }
-            public Inmueble inmueble { get; set; }
-            public Propietario propietario { get; set; }
+            [ForeignKey(nameof(InquilinoId))]
+            public Inquilino? inquilino { get; set; }
+            public Inmueble? inmueble { get; set; }
+            //public Propietario? propietario { get; set; }
 
 
-            public Contrato(){}
+           public Contrato(){}
 
-            public Contrato(DateTime FechaInicio, DateTime FechaFin, decimal Precio,int InquilinoId, int InmuebleId, Inquilino inquilino, Inmueble inmueble, Propietario propietario)
+            public Contrato(DateTime FechaInicio, DateTime FechaFin, decimal Precio,int InquilinoId, int InmuebleId, Inquilino inquilino, Inmueble inmueble)
+                           // public Contrato(DateTime FechaInicio, DateTime FechaFin, decimal Precio,int InquilinoId, int InmuebleId, Inquilino inquilino, Inmueble inmueble, Propietario propietario)
+
                 {
                     this.FechaInicio = FechaInicio;
                     this.FechaFin = FechaFin;
@@ -58,7 +61,7 @@ namespace Inmobiliaria23.Models;
                     this.InmuebleId = InmuebleId;
                     this.inquilino = inquilino;
                     this.inmueble = inmueble;
-                    this.propietario = propietario;
+                    //this.propietario = propietario;
 
                 }
 

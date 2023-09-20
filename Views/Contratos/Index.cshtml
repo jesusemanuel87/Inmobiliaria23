@@ -45,9 +45,9 @@
             <th>
                 Inquilino
             </th>
-            <th>
+            @* <th>
                 Propietario
-            </th>
+            </th> *@
             <th>
                 Inmueble
             </th>
@@ -72,16 +72,16 @@
             <td>
                 @item.inquilino.ToString()                
             </td>
-            <td>
+            @* <td>
                 @item.propietario.ToString()            
-            </td>
+            </td> *@
             <td>
                 @item.inmueble.ToString()
             </td>         
             <td>
                 @Html.ActionLink("", "Details", new { id=item.Id  }, new { @class = "fa-regular fa-file-lines btn btn-secondary rounded-circle", title = "Detalle"  })
-                @Html.ActionLink("", "Renovar", new {  id=item.Id },new { @class = "fas fa-calendar-plus btn btn-primary rounded-circle", title = "Renovar" })
-                @Html.ActionLink("", "Terminar", new {  id=item.Id },new { @class = "fas fa-calendar-minus btn btn-warning rounded-circle", title = "Terminar" }) 
+                @Html.ActionLink("", "Renew", new {  id=item.Id },new { @class = "fas fa-calendar-plus btn btn-primary rounded-circle", title = "Renovar" })
+                @Html.ActionLink("", "Terminate", new {  id=item.Id },new { @class = "fas fa-calendar-minus btn btn-warning rounded-circle", title = "Terminar" }) 
                 <a href="/Pagos/Contrato/@item.Id" title="Pagos" class="fa-solid fa-file-invoice-dollar btn btn-success rounded-circle"></a>
                 @if(User.IsInRole("Admin") || User.IsInRole("SuperAdmin" )){ @Html.ActionLink(" ", "Delete", new { id=item.Id  }, new { @class = "fa-solid fa-trash-can btn btn-danger rounded-circle", title = "Eliminar"  })}
             </td>

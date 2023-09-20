@@ -25,6 +25,7 @@ namespace Inmobiliaria23.Models;
             [Display(Name = "Código Contrato")]
             public int ContratoId { get; set; }
 
+            [DisplayFormat(DataFormatString = "{0:C}")]
             public Decimal? Importe { get; set; }
             public Contrato contrato { get; set; }
             public Inquilino inquilino { get; set; }

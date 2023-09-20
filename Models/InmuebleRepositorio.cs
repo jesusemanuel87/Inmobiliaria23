@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace Inmobiliaria23.Models;
 
@@ -89,16 +90,14 @@ public class InmuebleRepositorio
         Inmueble? p = null;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @$"SELECT i.Id, Direccion, Ambientes, Superficie,
-                    Latitud, Longitud, PropietarioId, Tipo,  
-                    p.Nombre, p.Apellido, Estado, Precio, Uso 
+            string query = @$"SELECT i.Id, Direccion, Ambientes, Superficie, Latitud, Longitud, PropietarioId, Tipo, p.Nombre, p.Apellido, Estado, Precio, Uso 
                     FROM inmuebles i 
                     JOIN propietarios p ON i.PropietarioId = p.Id
 					WHERE i.Id=@id";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 command.Parameters.Add("@id", MySqlDbType.Int16).Value = id;                
-                
+                command.CommandType = CommandType.Text;
                 connection.Open();
                 var reader = command.ExecuteReader();
                 if (reader.Read())
@@ -229,11 +228,9 @@ public class InmuebleRepositorio
         List<Inmueble> Inmuebles = new List<Inmueble>();
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            var query = @"SELECT i.Id, Direccion, Ambientes, Superficie, Latitud, Longitud, 
-            PropietarioId, Tipo, p.Nombre, p.Apellido, Estado, Precio, Uso   
+            var query = @"SELECT i.Id, Direccion, Ambientes, Superficie, Latitud, Longitud,  PropietarioId, Tipo, p.Nombre, p.Apellido, Estado, Precio, Uso   
             FROM inmuebles i 
-            INNER JOIN propietarios p 
-            ON i.PropietarioId = p.Id 
+            INNER JOIN propietarios p ON i.PropietarioId = p.Id 
             WHERE Estado = 1";
             using (var command = new MySqlCommand(query, connection))
             {

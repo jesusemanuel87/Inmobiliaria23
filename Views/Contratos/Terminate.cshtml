@@ -65,9 +65,9 @@
                  </dt>
                  <dd class = "col-sm-10">
                  @if(multa==null){
-                    @Model.Precio
+                    @Model.Precio.Value.ToString("C")
                  }else {
-                    @multa
+                    @multa.ToString("C")
                  }
                  </dd>
 
@@ -75,7 +75,7 @@
                  Deuda hasta la fecha
                  </dt>
                  <dd class = "col-sm-10">
-                    @deuda
+                    @deuda.ToString("C")
                  </dd>
 			</div>
             

@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace Inmobiliaria23.Models;
 
@@ -51,12 +52,12 @@ public class ContratoRepositorio
                                 PropietarioId = reader.GetInt32(9),
                                 Direccion = reader.GetString(12),
                             },
-                            propietario = new Propietario
-                            {
-                                Id = reader.GetInt32(9),
-                                Nombre = reader.GetString(10),
-                                Apellido = reader.GetString(11),
-                            }
+                            // propietario = new Propietario
+                            // {
+                            //     Id = reader.GetInt32(9),
+                            //     Nombre = reader.GetString(10),
+                            //     Apellido = reader.GetString(11),
+                            // }
                         };
                         contratos.Add(Contrato);
                     }
@@ -77,6 +78,7 @@ public class ContratoRepositorio
                                 SELECT LAST_INSERT_ID();";
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
+                command.CommandType = CommandType.Text;
                 command.Parameters.Add("@fechaInicio", MySqlDbType.DateTime).Value = Contrato.FechaInicio;
                 command.Parameters.Add("@fechaFin", MySqlDbType.DateTime).Value = Contrato.FechaFin;
                 command.Parameters.Add("@precio", MySqlDbType.Decimal).Value = Contrato.Precio;
@@ -94,20 +96,18 @@ public class ContratoRepositorio
 
     public Contrato GetContrato(int id)
     {
-        Contrato? p = null;
+        Contrato p = null;
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            string query = @$"SELECT c.Id, FechaInicio, FechaFin, c.Precio, InquilinoId, InmuebleId, 
-                                i.Nombre, i.Apellido, m.Tipo, m.PropietarioId  
+            string query = @$"SELECT c.Id, FechaInicio, FechaFin, c.Precio, InquilinoId, InmuebleId, i.Nombre, i.Apellido, m.Tipo, m.PropietarioId  
                                 FROM contratos c 
-                                INNER JOIN inquilinos i
-                                    ON  c.InquilinoId = i.Id
-                                INNER JOIN inmuebles m 
-                                    ON  c.InmuebleId = m.Id
+                                INNER JOIN inquilinos i ON  c.InquilinoId = i.Id
+                                INNER JOIN inmuebles m  ON  c.InmuebleId = m.Id
                                 WHERE c.Id=@id";
 
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
+                command.CommandType = CommandType.Text;
                 command.Parameters.Add("@id", MySqlDbType.Int16).Value = id;
                 
                 connection.Open();
@@ -151,6 +151,7 @@ public class ContratoRepositorio
 
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
+                command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@fechaInicio", p.FechaInicio);
                 command.Parameters.AddWithValue("@fechaFin", p.FechaFin);
                 command.Parameters.AddWithValue("@precio", p.Precio);
@@ -175,6 +176,7 @@ public class ContratoRepositorio
 
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
+                command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@id", id);
                 connection.Open();
                 res = command.ExecuteNonQuery();
@@ -197,6 +199,7 @@ public class ContratoRepositorio
 
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
+                command.CommandType = CommandType.Text;
                 command.Parameters.Add("@id", MySqlDbType.Int16).Value = idInmueble;
                 command.Parameters.Add("@fechaInicio", MySqlDbType.DateTime).Value = fechaInicio;
                 command.Parameters.Add("@fechaFin", MySqlDbType.DateTime).Value = fechaFin;
@@ -260,12 +263,12 @@ public class ContratoRepositorio
                                 PropietarioId = reader.GetInt32(9),
                                 Direccion = reader.GetString(12),
                             },
-                            propietario = new Propietario
-                            {
-                                Id = reader.GetInt32(9),
-                                Nombre = reader.GetString(10),
-                                Apellido = reader.GetString(11),
-                            }
+                            // propietario = new Propietario
+                            // {
+                            //     Id = reader.GetInt32(9),
+                            //     Nombre = reader.GetString(10),
+                            //     Apellido = reader.GetString(11),
+                            // }
                         };
                         Contratos.Add(Contrato);
                     }
@@ -284,16 +287,15 @@ public class ContratoRepositorio
             var query = @"SELECT c.Id, FechaInicio, FechaFin, c.Precio, InquilinoId, InmuebleId, 
                             i.Nombre, i.Apellido, m.Tipo, m.PropietarioId, p.Nombre, p.Apellido, m.Direccion  
                             FROM contratos c 
-                            INNER JOIN inquilinos i
-                                ON  c.InquilinoId = i.Id
-                            INNER JOIN inmuebles m 
-                                ON  c.InmuebleId = m.Id
-                            INNER JOIN propietarios p    
-                                ON m.PropietarioId = p.Id
-                            WHERE @fechaInicio BETWEEN c.FechaInicio AND c.FechaFin 
-                                OR @fechaFin	 BETWEEN c.FechaInicio AND c.FechaFin;";
+                            INNER JOIN inquilinos i ON  c.InquilinoId = i.Id
+                            INNER JOIN inmuebles m  ON  c.InmuebleId = m.Id
+                            INNER JOIN propietarios p ON m.PropietarioId = p.Id
+                            WHERE @fechaInicio BETWEEN c.FechaInicio 
+                                    AND c.FechaFin 
+                                    OR @fechaFin BETWEEN c.FechaInicio AND c.FechaFin;";
             using (var command = new MySqlCommand(query, connection))
             {
+                command.CommandType = CommandType.Text;
                 command.Parameters.Add("@fechaInicio", MySqlDbType.DateTime).Value = fechaInicio;
                 command.Parameters.Add("@fechaFin", MySqlDbType.DateTime).Value = fechaFin;
                 connection.Open();
@@ -322,12 +324,12 @@ public class ContratoRepositorio
                                 PropietarioId = reader.GetInt32(9),
                                 Direccion = reader.GetString(12),
                             },
-                            propietario = new Propietario
-                            {
-                                Id = reader.GetInt32(9),
-                                Nombre = reader.GetString(10),
-                                Apellido = reader.GetString(11),
-                            }
+                            // propietario = new Propietario
+                            // {
+                            //     Id = reader.GetInt32(9),
+                            //     Nombre = reader.GetString(10),
+                            //     Apellido = reader.GetString(11),
+                            // }
                         };
                         Contratos.Add(Contrato);
                     }

@@ -62,17 +62,23 @@ namespace Inmobiliaria23.Controllers
         {
             try
             {                
-                if (ModelState.IsValid) {
+               // if (ModelState.IsValid) {
+                if (propietario.Nombre != null || propietario.Apellido != null || propietario.DNI != null
+                || propietario.Telefono != null || propietario.Email != null)
+                {
                     repositorio.Alta(propietario);
                     TempData["Id"] = propietario.Id;
                     return RedirectToAction(nameof(Index));
                 }
                 else {
-                    return View(propietario);
+                    TempData["MensajeError"] = "Debe completar todos los campos!";
+                return RedirectToAction(nameof(Create));
                 }
             }
             catch
             {
+                TempData["MensajeError"] = "No se pudo CREAR el propietario.";
+                return RedirectToAction(nameof(Index));
                 throw;
             }
         }
@@ -111,6 +117,8 @@ namespace Inmobiliaria23.Controllers
             }
             catch (Exception )
             {//poner breakpoints para detectar errores
+            TempData["MensajeError"] = "No se puede EDITAR el propietario.";
+                return RedirectToAction(nameof(Index));
                 throw;
             }
         }
@@ -127,7 +135,8 @@ namespace Inmobiliaria23.Controllers
             }
             catch (Exception)
             {
-                
+                TempData["MensajeError"] = "No se puede eliminar el propietario.";
+                return RedirectToAction(nameof(Index));
                 throw;
             }
             

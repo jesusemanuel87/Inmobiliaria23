@@ -53,7 +53,9 @@ namespace Inmobiliaria23.Controllers
         {
             try
             {                
-                if (ModelState.IsValid) {
+                //if (ModelState.IsValid) {
+                if (inquilino.Nombre == null || inquilino.Apellido == null || inquilino.DNI == null ||inquilino.Telefono == null || inquilino.Email == null)
+                {
                     repositorio.Alta(inquilino);
                     TempData["Id"] = inquilino.Id;
                     return RedirectToAction(nameof(Index));

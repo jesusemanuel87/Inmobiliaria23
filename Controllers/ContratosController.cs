@@ -186,7 +186,7 @@ public class ContratosController : Controller
         }
 
         [Authorize]
-        public ActionResult Terminar(int id)
+        public ActionResult Terminate(int id)
         {
             try
             {
@@ -197,28 +197,24 @@ public class ContratosController : Controller
                 ViewBag.InmuebleActual = inmuebleRepositorio.GetInmueble(contrato.InmuebleId);
                 ViewBag.deuda = deuda;
 
-                var intervaloF = contrato.FechaFin.Subtract(contrato.FechaInicio) / 30;
-                var intervaloA = DateTime.Now.Subtract(contrato.FechaInicio) / 30;
-                if ((intervaloF / 2) > intervaloA)
+                var intervaloFinal = contrato.FechaFin.Subtract(contrato.FechaInicio) / 30;
+                var intervaloAactual = DateTime.Now.Subtract(contrato.FechaInicio) / 30;
+                if ((intervaloFinal / 2) > intervaloAactual)
                 {
                     ViewBag.multa = contrato.Precio * 2;
                 }
-
                 return View(contrato);
             }
             catch (System.Exception)
             {
-
                 throw;
             }
-
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Terminar(int id, Contrato collection)
+        public ActionResult Terminate(int id, Contrato collection)
         {
             Contrato contrato = new Contrato();
             try
@@ -242,37 +238,43 @@ public class ContratosController : Controller
         [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Delete(int id)
         {
-            var contrato = contratoRepositorio.GetContrato(id);
-            ViewBag.InquilinoActual = inquilinoRepositorio.GetInquilino(contrato.InquilinoId);
-            ViewBag.InmuebleActual = inmuebleRepositorio.GetInmueble(contrato.InmuebleId);
-            return View(contrato);
+            try
+            {
+                Contrato contrato = contratoRepositorio.GetContrato(id);
+                ViewBag.InquilinoActual = inquilinoRepositorio.GetInquilino(contrato.InquilinoId);
+                ViewBag.InmuebleActual = inmuebleRepositorio.GetInmueble(contrato.InmuebleId);
+                return View(contrato);
+            }catch(Exception){
+                TempData["MensajeError"] = "No se puede eliminar.";
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         // POST: Contratos/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Eliminar(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-                if (contratoRepositorio.Baja(id) > 0)
-                {
+                
+                    contratoRepositorio.Baja(id);
                     TempData["Mensaje"] = "Eliminación realizada correctamente";
-                }
+                
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 //return View();
-                TempData["MensajeError"] = "No se puede eliminar el inquilino debido a contratos vinculados.";
+                TempData["MensajeError"] = "No se puede eliminar debido a datos vinculados.";
                 return RedirectToAction(nameof(Index));
             }
         }
 
         [Authorize]
-        public ActionResult Renovar(int id)
+        public ActionResult Renew(int id)
         {
             try
             {
@@ -299,7 +301,7 @@ public class ContratosController : Controller
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Renovar(int id, Contrato collection)
+        public ActionResult Renew(int id, Contrato collection)
         {
             Contrato contrato = new Contrato();
             try
@@ -318,17 +320,17 @@ public class ContratosController : Controller
                 if (collection.Precio <= 0) // || collection.FechaFin == null)
                 {
                     TempData["Mensaje"] = "Complete campos fecha y precio";
-                    return RedirectToAction(nameof(Renovar));
+                    return RedirectToAction(nameof(Renew));
                 }
                 if (collection.FechaFin <= contrato.FechaFin)
                 {
                     TempData["Mensaje"] = "La fecha de fin debe ser mayor a la fecha fin actual";
-                    return RedirectToAction(nameof(Renovar));
+                    return RedirectToAction(nameof(Renew));
                 }
                 if (collection.FechaInicio >= collection.FechaFin)
                 {
                     TempData["Mensaje"] = "La fecha fin debe ser mayor a la fecha inicio";
-                    return RedirectToAction(nameof(Renovar));
+                    return RedirectToAction(nameof(Renew));
                 }
 
                 var fechai = collection.FechaInicio;
